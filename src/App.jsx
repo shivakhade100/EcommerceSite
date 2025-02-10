@@ -26,7 +26,7 @@ export default function App() {
       {/* <Assi66/> */}
       {/* <Assi67/> */}
       {/* <Assi68/>   */}
-      {/* <Assi69/>   */}
+      <Assi69/>  
       {/* <Assi70/> */}
       {/* <Pratice /> */}
       
