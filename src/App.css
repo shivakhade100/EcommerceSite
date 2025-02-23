@@ -1,10 +1,13 @@
-/* #root {
+ /* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 } */
-
+/* .content-page
+{
+  margin-top: 100px;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -39,15 +42,15 @@
 
 .read-the-docs {
   color: #888;
-}
+} */
 .myb {
   border: 2px solid black;
   text-align: center;
 }
-.myi {
+/* .myi {
   border-radius: 10px;
 }
 .myc{
   text-align: center;
   margin: 20px auto ;
-}
+} */ 

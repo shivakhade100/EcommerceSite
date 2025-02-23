@@ -11,7 +11,9 @@ import Assi67 from "./Assi67";
 import Assi68 from "./Assi68";
 import Assi69 from "./Assi69";
 import Assi70 from "./Assi70";
-import Pratice from "./pratice";
+import Practice from "./practice";
+import Ecommerce from "./Ecommerce";
+
 
 export default function App() {
   return (
@@ -27,8 +29,10 @@ export default function App() {
       {/* <Assi67/> */}
       {/* <Assi68/>   */}
       {/* <Assi69/>   */}
-      <Assi70/>
-      {/* <Pratice /> */}
+      {/* <Assi70/> */}
+      {/* <Practice /> */}
+      <Ecommerce/>
+      
       
     </>
   );
