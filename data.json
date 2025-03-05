@@ -15,17 +15,38 @@
       "role": "user"
     },
     {
-      "id": "3935",
+      "id": "f839",
       "Username": "mahesh",
-      "email": "siddhukmoss@gmail.com",
+      "email": "mafimec273@modotso.com",
+      "password": "sidd123",
+      "role": "user"
+    },
+    {
+      "id": "c18b",
+      "Username": "kajal",
+      "email": "kajal@gami.com",
+      "password": "123",
+      "role": "user"
+    },
+    {
+      "id": "8a84",
+      "Username": "siddhesh",
+      "email": "wacan52550@abevw.com",
       "password": "sidd1234",
       "role": "user"
     },
     {
-      "id": "df38",
-      "Username": "suresh",
-      "email": "mafimec273@modotso.com",
-      "password": "suresh123",
+      "id": "7efd",
+      "Username": "siddhu",
+      "email": "mankarsiddhesh732@edunetmail.com",
+      "password": "1234",
+      "role": "user"
+    },
+    {
+      "id": "e43e",
+      "Username": "omkarmankar",
+      "email": "omkar12@gmail.com",
+      "password": "omkar2008",
       "role": "user"
     }
   ],
@@ -36,7 +57,7 @@
       "image": "grapes.jpg",
       "unit": "kg",
       "mrp": 130,
-      "discount": 10,
+      "discount": "50",
       "inStock": false,
       "qty": 0,
       "type": "Organic"
@@ -47,7 +68,7 @@
       "image": "mango.jpg",
       "unit": "doz",
       "mrp": 500,
-      "discount": 8,
+      "discount": "9",
       "inStock": true,
       "qty": 0,
       "type": "Organic"

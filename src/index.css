@@ -1,39 +1,4 @@
-/* :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-} */
-
-/* a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-} */
-
-/* body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-} */
-
-/* h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-} */
 
 .buton {
   border-radius: 8px;
@@ -44,27 +9,27 @@ a:hover {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  /* transition: border-color 0.25s; */
+  transition: border-color 0.25s;
 }
-/* .buton:hover {
-  border-color: #646cff;
+.buton:hover {
+  border-color: #0a0f76;
 }
 .buton:focus,
 .buton:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}  */
+} 
 
-/* @media (prefers-color-scheme: light) {
-  /*:root {
+ /* @media (prefers-color-scheme: light) {
+  :root {
     color: #213547;
     background-color: #ffffff;
   }
   a:hover {
     color: #747bff;
-  }*/ /*
+  }
   .buton {
     background-color: #f9f9f9;
-  }
+  } 
 }  */
 img {
   border-radius: 14px;
@@ -91,7 +56,7 @@ img {
   width: fit-content;
 }
 .buton {
-  padding: 0.6em 2em;
+  /* padding: 0.6em 2em; */
   border: none;
   outline: none;
   color: rgb(255, 255, 255);
@@ -100,10 +65,11 @@ img {
   position: relative;
   z-index: 1;
   border-radius: 10px;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+   user-select: none; 
+   -webkit-user-select: none; 
+   touch-action: manipulation; 
 }
+
 
 .buton:before {
   content: "";
@@ -175,7 +141,7 @@ img {
   
 }
 .log {
-  align-items: center;
+  /* align-items: center; */
   background-color: initial;
   background-image: linear-gradient(#464d55, #25292e);
   border-radius: 8px;
@@ -192,11 +158,12 @@ img {
   font-size: 18px;
   height: 30px;
   justify-content: center;
-  line-height: 1;
+  /* line-height: 1; */
   margin: 5px;
   outline: none;
   overflow: hidden;
-  padding: 0 32px;
+  /* padding: 0 32px; */
+  padding: auto;
   text-align: center;
   text-decoration: none;
   transform: translate3d(0, 0, 0);
@@ -235,4 +202,61 @@ img {
    -webkit-background-size: cover;
   -moz-background-size: cover;
   -moz-background-size: cover; 
+}
+.bor{
+  border-radius: 100%;
+  border: 3px solid rgb(0, 0, 0);
+  padding: 8px;
+  background-color: #7a04f8;
+   
+}
+
+
+
+.butonadmin {
+  appearance: none;
+  background-color: #000000;
+  border: 2px solid #1A1A1A;
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  min-height: 45px;
+  min-width: 0;
+  outline: none;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  
+  will-change: transform;
+}
+
+.butonadmin:disabled {
+  pointer-events: none;
+}
+
+.butonadmin:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.butonadmin:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+.mybb{
+border: 7px solid black;
+border-style: double;
+
+  
 }

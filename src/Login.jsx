@@ -11,6 +11,7 @@ export default function Login(props) {
 
   return (
     <>
+    <div className="my-5 p-4"></div>
       {loginStatus == "success" && (
         <div className="text-center text-danger">
           <h3>Login Successful...</h3>
@@ -25,50 +26,55 @@ export default function Login(props) {
       )}
 
       {(loginStatus == "failed" || loginStatus == "no") && (
-        <div className="row login-container">
-          <form action="" onSubmit={handleLoginFormSubmit}>
-            {/* <h2> Welcome To Login Form</h2> */}
-
-            <div className="row">
-              <div className="col-6 text-end my-2">
-                <label htmlFor="">Username:</label>
-              </div>
-              <div className="col-6 text-start my-2">
-                <input type="name" name="UserName" />
-              </div>
+        <div className="p-3 my-5">
+          <div className="text-center p-5   text-decoration-underline  h4 my-3">
+            LOGIN FORM
+          </div>
+          <div className="row  justify-content-center ">
+            <div className="col-sm-12 col-md-6 border border-3 border-dark">
+              <form action="" onSubmit={handleLoginFormSubmit}>
+                {/* <h2> Welcome To Login Form</h2> */}
+                <div className="row">
+                  <div className="col-6 p-2  h4  text-end">
+                    <label htmlFor="">Username:</label>
+                  </div>
+                  <div className="col-6  p-2">
+                    <input type="name" name="UserName" />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-6 p-2  h4  text-end">
+                    <label htmlFor="">EmailId:</label>
+                  </div>
+                  <div className="col-6  p-2">
+                    <input type="email" name="email" />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-6 p-2  h4  text-end">
+                    <label htmlFor="">Password:</label>
+                  </div>
+                  <div className="col-6  p-2">
+                    <input type="password" name="password" />
+                  </div>
+                  <div className=" offset-6 col-6 text-start">
+                    <input
+                      type="submit"
+                      value="Ok"
+                      className="mx-1  btn   btn-warning"
+                    />
+                    <input
+                      type="reset"
+                      value="Clear"
+                      className=" mx-1 btn btn-warning"
+                    />
+                    {/* <button className="btn btn-danger mx-2">Ok</button>
+                    <button className="btn btn-danger my-3">Clear</button> */}
+                  </div>
+                </div>
+              </form>
             </div>
-            <div className="row">
-              <div className="col-6 text-end my-2">
-                <label htmlFor="">EmailId:</label>
-              </div>
-              <div className="col-6 text-start my-2">
-                <input type="email" name="email" />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-6 text-end">
-                <label htmlFor="">Password:</label>
-              </div>
-              <div className="col-6 text-start">
-                <input type="password" name="password" />
-              </div>
-              <div className=" offset-6 col-6 text-start">
-                <input
-                  type="submit"
-                  value="Ok"
-                  className="mx-1  btn   btn-warning"
-                />
-                <input
-                  type="reset"
-                  value="Clear"
-                  className=" mx-1 btn btn-warning"
-                />
-                {/* <button className="btn btn-danger mx-2">Ok</button>
-                <button className="btn btn-danger my-3">Clear</button> */}
-              </div>
-            </div>
-          </form>
+          </div>
         </div>
       )}
       {/* <div className="p-5 my-5">

@@ -25,7 +25,7 @@ export default function ProductPage(props) {
 
   return (
     <>
-      <div className="row  html  p-5 my-5 text-center ">
+      <div className="row  html  col-sm-6 col-md-12  radius p-5  my-5 text-center ">
         {productList.map((e, index) => (
           <Product
             product={e}
