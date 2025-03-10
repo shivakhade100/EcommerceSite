@@ -79,6 +79,7 @@ export default function AdminProductForm(props) {
       product
     );
     props.onProductEditFormSubmit(product);
+   
     setFlagLoader(false);
     
   }
@@ -91,6 +92,7 @@ export default function AdminProductForm(props) {
 
     props.onProductAddFormSubmit(data); // this has id
     setFlagLoader(false);
+    
   }
   if (flagLoader) {
     return <BeatLoader size={24} color={"red"} className="text-center" />;
@@ -118,8 +120,8 @@ export default function AdminProductForm(props) {
             }}
           >
             <div className="row">
-              <div className="col-sm-4 col-6 my-2 text-end">Name</div>
-              <div className="col-6 my-2">
+              <div className="col-sm-4 col-5 my-2 text-end">Name</div>
+              <div className="col-6 my-2  ">
                 <input
                   type="text"
                   name="name"
@@ -134,7 +136,7 @@ export default function AdminProductForm(props) {
               <div className="offset-sm-4 offset-6 text-start text-danger">
                 {errorProduct.name.message && errorProduct.name.message}
               </div>
-              <div className="col-sm-4 col-6 my-2 text-end">MRP</div>
+              <div className="col-sm-4 col-5 my-2 text-end">MRP</div>
               <div className="col-6 my-2">
                 <input
                   type="text"
@@ -150,7 +152,7 @@ export default function AdminProductForm(props) {
               <div className="offset-sm-4 offset-6 text-start text-danger">
                 {errorProduct.mrp.message && errorProduct.mrp.message}
               </div>
-              <div className="col-sm-4 col-6  my-2 text-end">Discount</div>
+              <div className="col-sm-4 col-5  my-2 text-end">Discount</div>
               <div className="col-6 my-2">
                 <input
                   type="text"
@@ -168,7 +170,7 @@ export default function AdminProductForm(props) {
                 {errorProduct.discount.message && errorProduct.discount.message}
               </div>
 
-              <div className="col-sm-4 col-6  my-2 text-end"></div>
+              <div className="col-sm-4 col-3  my-2 text-end"></div>
               <div className="col-6 my-2">
                 <input
                   className="btn btn-danger"

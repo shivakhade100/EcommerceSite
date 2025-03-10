@@ -5,6 +5,7 @@ import AdminProductForm from "./AdminProductForm";
 
 export default function AdminProductPage(props) {
   let { productList } = props;
+  let { view } = props;
   let [adminView, setAdminView] = useState("list");
   let [selectedProduct, SetSelectedProduct] = useState("");
 
@@ -37,12 +38,13 @@ export default function AdminProductPage(props) {
       });
 
       props.onProductEditFormSubmit(list);
-      adminView("list");
+      setAdminView("list");
     } else if (adminView == "add") {
       console.log("for Add");
       let list = [...productList];
       list.push(product);
       props.onProductAddFormSubmit(list);
+      setAdminView("list")
     }
   }
 
@@ -68,9 +70,9 @@ export default function AdminProductPage(props) {
 
   return (
     <>
-      <div className="my-5 p-2"></div>
+      <div className=""></div>
       {adminView == "list" && (
-        <div className=" text-center    m  text-white html  ">
+        <div className=" text-center      text-white html  ">
           <a href="#" className="h5" onClick={handleLIstFormClick}>
             {" "}
             Add the new product
@@ -102,7 +104,8 @@ export default function AdminProductPage(props) {
             productList={productList}
             selectedProduct={selectedProduct}
             onProductListClick={handleProductListClick}
-            onProductAddEditFormSubmit={handleProductAddEditFormSubmit}
+            onProductAddFormSubmit={handleProductAddEditFormSubmit}
+            onProductEditFormSubmit={handleProductAddEditFormSubmit}
           />
         </div>
       )}

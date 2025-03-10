@@ -32,7 +32,7 @@ export default function AdminProduct(props) {
   // }
 
   return (
-    <div className="    col-6 col-lg-3    p-2    mt-2   ">
+    <div className="    col-12 col-lg-3    p-2    mt-2   ">
       <div className="myc    bg-opacity-75  bg-body  p-2  radius p-1">
         <div className=" ">
           <div className=" position-absolute  h3 radius myd  ">
@@ -54,13 +54,18 @@ export default function AdminProduct(props) {
             {finalprice}
           </h4>
         )}
-        <div className=" text-center m-3  ">
-          <button className="  butonadmin mx-3" onClick={handleAddCartAdmin}>
-            <i class="bi bi-bag-plus-fill"></i>
-          </button>
-          <button className="butonadmin btn mx-3" onClick={handleDeleteCartAdmin}>
-            <i class="bi bi-trash"></i>
-          </button>
+        <div className="row ">
+          <div className="  col-6 col-sm-12 col-lg-6      ">
+            <button className="  butonadmin mx-5   " onClick={handleAddCartAdmin}>
+              <i class="bi bi-bag-plus-fill"></i>
+            </button>
+            </div>
+            <div className="col-6 col-sm-12   col-lg-6   ">
+              <button className="  butonadmin    " onClick={handleDeleteCartAdmin}>
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
+          
         </div>
       </div>
     </div>

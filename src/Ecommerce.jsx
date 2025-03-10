@@ -27,6 +27,8 @@ export default function Ecommerce() {
   let [message, setMessage] = useState("");
   // let [target, setTarget] = useState("");
   let [user, setUser] = useState("");
+  let [name, setName] = useState("");
+  let [text, setText] = useState([]);
 
   useEffect(() => {
     getDataFromServer();
@@ -114,22 +116,27 @@ export default function Ecommerce() {
       (e, index) => e.email == userData.email && e.password == userData.password
     );
     if (filteredData.length == 1) {
-      setLoginStatus("success");
       setUser(filteredData[0]);
       let u = filteredData[0];
       localStorage.setItem("user", JSON.stringify(filteredData[0]));
       localStorage.setItem("loginStatus", "success");
       if (u.role == "user") {
+        setLoginStatus("success");
         setTimeout(() => {
+          // name = u.name;
+          setName(u.name);
           setView("productPage");
-        }, 3000);
+        }, 2000);
       } else if (u.role == "admin") {
+        setLoginStatus("success");
         setTimeout(() => {
+          // name=u.name
+          setName(u.name);
           setView("admin");
-        }, 3000);
+        }, 2000);
       }
       // addDataToServer(user)
-      setSuccessMessage(true);
+      // setSuccessMessage(true);
 
       // setTimeout(() => {
       //   setSuccessMessage(false);
@@ -140,8 +147,16 @@ export default function Ecommerce() {
       // }, 1000);
     } else {
       setLoginStatus("failed");
-      clearMessage();
+      setView("Login")
+      setTimeout(() => {
+        setLoginStatus("")
+       
+      }, 1000);
+      
+      
     }
+   
+    
   }
 
   function handleCartItems() {
@@ -281,7 +296,7 @@ export default function Ecommerce() {
     setSignupStatus("no"); // Reset signup status (if needed)
     setMessage(); // Clear any messages
     localStorage.removeItem("user");
-    localStorage.removeItem("loginStatus");
+    // localStorage.removeItem("loginStatus");
 
     //  setView("Login");
   }
@@ -322,43 +337,43 @@ export default function Ecommerce() {
   function handleProductAddEditFormSubmit(list) {
     setProductList(list);
   }
-  function calculateTotal(f) {
-    let total = 0;
-    f.forEach((e, index) => {
-      total += e.totalprice * e.qty;
-    });
-    setTotalPrice(total);
-  }
-  function handleChangeButtonClick(op, e) {
-    //console.log(op);
-    let p = [...productList];
-    let cItems = [...CartItems];
-    let index = p.indexOf(e);
+  // function calculateTotal(f) {
+  //   let total = 0;
+  //   f.forEach((e, index) => {
+  //     total += e.totalprice * e.qty;
+  //   });
+  //   setTotalPrice(total);
+  // }
+  // function handleChangeButtonClick(op, e) {
+  //   //console.log(op);
+  //   let p = [...productList];
+  //   let cItems = [...CartItems];
+  //   let index = p.indexOf(e);
 
-    if (op == "+") {
-      p[index].qty = p[index].qty + 1;
-      cItems = cItems.map((f) => {
-        if (f.id == e.id) return e;
-        else return e;
-      });
-      setCartItems(cItems);
-    } else if (op == "-") {
-      p[index].qty = p[index].qty - 1;
-      if (p[index].qty == 0) {
-        setCnt(cnt - 1);
-        cItems = cItems.filter((f) => f.id != e.id);
-        setCartItems(cItems);
-      }
-    } else if (op == "addtocart") {
-      p[index].qty = 1;
-      setCnt(cnt + 1);
-      cItems.push(e);
-      //setCartItems(product);
-      setCartItems(cItems);
-    }
-    calculateTotal(p);
-    setProductList(p);
-  }
+  //   if (op == "+") {
+  //     p[index].qty = p[index].qty + 1;
+  //     cItems = cItems.map((f) => {
+  //       if (f.id == e.id) return e;
+  //       else return e;
+  //     });
+  //     setCartItems(cItems);
+  //   } else if (op == "-") {
+  //     p[index].qty = p[index].qty - 1;
+  //     if (p[index].qty == 0) {
+  //       setCnt(cnt - 1);
+  //       cItems = cItems.filter((f) => f.id != e.id);
+  //       setCartItems(cItems);
+  //     }
+  //   } else if (op == "addtocart") {
+  //     p[index].qty = 1;
+  //     setCnt(cnt + 1);
+  //     cItems.push(e);
+  //     //setCartItems(product);
+  //     setCartItems(cItems);
+  //   }
+  //   calculateTotal(p);
+  //   setProductList(p);
+  // }
 
   // function handleCartButtonClick() {
   //   //setView("CartList");
@@ -384,6 +399,15 @@ export default function Ecommerce() {
   function handleBuyButtonClick() {
     setView("bill");
   }
+  function handleChangeKeyUp(event) {
+    let t = event.target.value;
+
+    let list = [...productList];
+    list = list.filter((e, index) => e.name.toLowerCase().startsWith(t.toLowerCase()));
+    setProductList(list);
+
+    console.log(text);
+  }
   //list button check
   // function handleProductListClick(view){
   //   setView(view)
@@ -396,17 +420,21 @@ export default function Ecommerce() {
           totalprice={totalprice}
           CartItems={CartItems}
           user={user}
+          name={name}
+          loginStatus={loginStatus}
           onFormButtonClick={handleFormButtonClick}
           // onCartButtonClick={handleCartButtonClick}
           onLogoutClick={handleLogoutClick}
           onCartItems={handleCartItems}
+          onChangeKeyUp={handleChangeKeyUp}
         ></NavBar>
       </div>
       <div className="  colour">
         {view == "productPage" && (
-          <div className="col-lg-12 col-sm-12 col-md-6">
+          <div className="col-lg-12 col-sm-12 col-md-6 my-">
             <ProductPage
               productList={productList}
+              text={text}
               onFormButtonClick={handleFormButtonClick}
               onAddToCart={handleAddToCart}
               onIncrement={handleIncrement}
@@ -415,33 +443,36 @@ export default function Ecommerce() {
           </div>
         )}
         {view == "Login" && (
-          <Login
-            user={user}
-            view={view}
-            loginStatus={loginStatus}
-            onClick={handleFormButtonClick}
-            onLoginFormSubmit={handleLoginFormSubmit}
-            onLoginClick={handleLoginClick}
-          />
+          <div className=" text-white html">
+            <Login
+              user={user}
+              view={view}
+              name={name}
+              loginStatus={loginStatus}
+              onClick={handleFormButtonClick}
+              onLoginFormSubmit={handleLoginFormSubmit}
+              onLoginClick={handleLoginClick}
+            />
+          </div>
         )}
         {view == "SignUp" && (
-          <SignUpPage
-            view={view}
-            signupstatus={signupstatus}
-            onFormButtonClick={handleFormButtonClick}
-            onSignUpFormSubmit={handleSignUpFormSubmit}
-            onLoginClick={handleLoginClick}
-
-            // users={user}
-            // onChange={checkUser}
-          />
+          <div className="html">
+            <SignUpPage
+              view={view}
+              signupstatus={signupstatus}
+              onFormButtonClick={handleFormButtonClick}
+              onSignUpFormSubmit={handleSignUpFormSubmit}
+              onLoginClick={handleLoginClick}
+              // users={user}
+              // onChange={checkUser}
+            />
+          </div>
         )}
         {view == "cart" && (
-          <div className="col-sm-12 col-md-6 col-lg-12">
+          <div className=" html">
             <CartPageItems
               CartItems={CartItems}
               totalprice={totalprice}
-            
               // product={product}
               onIncrement={handleIncrement}
               onDecrement={handleDecrement}
@@ -452,18 +483,19 @@ export default function Ecommerce() {
           </div>
         )}
         {view == "bill" && (
-          <div className="col-lg-12 bg-info">
+          <div className=" col-12 col-lg-12 vh-100    col-sm-6 html">
             <Bill
               // onChangeButtonClick={handleChangeButtonClick}
               totalprice={totalprice}
-              // name={name}
+              user={user}
+              name={name}
               CartItems={CartItems}
             />
           </div>
         )}
         {view == "noelement" && (
-          <div className="my-5 p-5 col-lg-12 col-sm-12 col-md-6">
-            <div className=" p-3    text-center my-5 h4 ">
+          <div className="my-5 p-5 vh-100  html col-lg-12 col-sm-12 col-md-6">
+            <div className=" p-3    text-white text-center my-5 h4 ">
               Cart is Empty.{" "}
               <a href="#" onClick={handleStartButtonClick}>
                 Start

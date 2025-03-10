@@ -1,6 +1,7 @@
 export default function Login(props) {
   let { loginStatus } = props;
   let { user } = props;
+  let {name}=props
 
   function handleLoginFormSubmit(event) {
     event.preventDefault();
@@ -13,14 +14,14 @@ export default function Login(props) {
     <>
     <div className="my-5 p-4"></div>
       {loginStatus == "success" && (
-        <div className="text-center text-danger">
+        <div className="text-center ">
           <h3>Login Successful...</h3>
-          <h3>Welcome {user.UserName}, Start Shopping!!!</h3>
+          <h3>Welcome {name}, Start Shopping!!!</h3>
         </div>
       )}
 
       {loginStatus == "failed" && (
-        <div className="text-center text-danger">
+        <div className="text-center text-white">
           Sorry... Wrong Credentials
         </div>
       )}
@@ -39,7 +40,7 @@ export default function Login(props) {
                     <label htmlFor="">Username:</label>
                   </div>
                   <div className="col-6  p-2">
-                    <input type="name" name="UserName" />
+                    <input type="name" name="name" />
                   </div>
                 </div>
                 <div className="row">
@@ -57,16 +58,16 @@ export default function Login(props) {
                   <div className="col-6  p-2">
                     <input type="password" name="password" />
                   </div>
-                  <div className=" offset-6 col-6 text-start">
+                  <div className="   col-lg-12 text-center   text-start">
                     <input
                       type="submit"
                       value="Ok"
-                      className="mx-1  btn   btn-warning"
+                      className="mx-1  btn log  btn-warning"
                     />
                     <input
                       type="reset"
                       value="Clear"
-                      className=" mx-1 btn btn-warning"
+                      className=" mx-1 btn log btn-warning"
                     />
                     {/* <button className="btn btn-danger mx-2">Ok</button>
                     <button className="btn btn-danger my-3">Clear</button> */}

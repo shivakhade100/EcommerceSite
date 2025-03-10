@@ -198,7 +198,7 @@ img {
   width: 100%;
 }
 .html {
-  background: url(/bodyimage.jpeg) no-repeat center center fixed;
+  background: url(/bodyimage.jpeg) no-repeat center    fixed;
    -webkit-background-size: cover;
   -moz-background-size: cover;
   -moz-background-size: cover; 

@@ -6,6 +6,8 @@ export default function NavBar(props) {
   let { totalprice } = props;
   let { view } = props;
   let { user } = props;
+  let { name } = props;
+  let { loginStatus } = props;
 
   let { cItems } = props;
   // let { Qty } = props;
@@ -24,6 +26,9 @@ export default function NavBar(props) {
   function handleLogoutClick() {
     props.onLogoutClick();
   }
+  function handleChangeKeyUp(event) {
+    props.onChangeKeyUp(event);
+  }
   // function handleCartButtonClick(v) {
   //   props.onCartButtonClick(v);
   // }
@@ -35,9 +40,10 @@ export default function NavBar(props) {
 
   return (
     <>
-      <div className=" row    fixed-top  align-items-center justify-content-around  bg    ">
+      <div className="my-5 p-2"></div>
+      <div className=" row    fixed-top align-items-center justify-content-around bg    ">
         <div
-          className="col-4 col-lg-2     "
+          className="col-4 col-lg-2        "
           id=" logo"
           onClick={() => handleFormButtonClick("productPage")}
         >
@@ -47,14 +53,17 @@ export default function NavBar(props) {
             alt=""
           />
         </div>
-        <div className="col-5 col-lg-3   col-sm-6 col-md-12   ">
+        <div className="col-5    text-center  col-sm-6 col-md-12  col-lg-5  ">
           {/* if user is filled its information successfully then show them logout button for exit */}
+          {loginStatus == "success" && (
+            <div className=" text-dark h5">Welcome {name} </div>
+          )}
+
           {user ? (
             <>
-              <div className="h4">
-                welcome {user.name} !{" "}
+              <div className="h4 col-2   justify-content-between  ps-4 col-lg-9 ">
                 <button
-                  className="btn btn-primary  m-2"
+                  className="btn btn-primary  "
                   onClick={handleLogoutClick}
                 >
                   Logout
@@ -64,7 +73,7 @@ export default function NavBar(props) {
           ) : (
             <>
               <button
-                className="btn btn-primary log  "
+                className="btn btn-primary log  mx-2 "
                 onClick={() => {
                   handleFormButtonClick("SignUp");
                 }}
@@ -73,7 +82,7 @@ export default function NavBar(props) {
               </button>
 
               <button
-                className="btn btn-primary log "
+                className="btn btn-primary log  mx-2"
                 onClick={() => {
                   handleFormButtonClick("Login");
                 }}
@@ -83,7 +92,7 @@ export default function NavBar(props) {
             </>
           )}
         </div>
-        <div className=" cart col-sm-12 col-lg-1 col-3  ">
+        <div className=" cart col-sm-12 col-lg-3    text-end col-3   ">
           <div className="cartbtn">
             <button className="cartbtn radius" onClick={handleCartItems}>
               <i className=" bi-cart2 fs-1  ">
@@ -92,6 +101,21 @@ export default function NavBar(props) {
             </button>
           </div>
         </div>
+        {view != "productPage" ? (
+          ""
+        ) : (
+          <div className="text-center    bg">
+            <input
+              type="text"
+              name="text"
+              size="50"
+              id=""
+              placeholder="Search  Fruits"
+              onKeyUp={handleChangeKeyUp}
+              className=" text-opacity-50  "
+            />
+          </div>
+        )}
       </div>
     </>
   );
