@@ -1,4 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getAuth } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth/web-extension";
+import { useState } from "react";
 
 export default function NavBar(props) {
   let { cnt } = props;
@@ -8,6 +11,9 @@ export default function NavBar(props) {
   let { user } = props;
   let { name } = props;
   let { loginStatus } = props;
+  let [btnview, setBtnView] = useState("");
+  // const provider = new GoogleAuthProvider();
+  //   const auth = getAuth();
 
   let { cItems } = props;
   // let { Qty } = props;
@@ -29,6 +35,15 @@ export default function NavBar(props) {
   function handleChangeKeyUp(event) {
     props.onChangeKeyUp(event);
   }
+  function handleLoginButtonClickUsingGoogle() {
+    props.onLoginButtonClickUsingGoogle();
+  }
+  function handleButtonLogout() {
+    props.onButtonLogout();
+  }
+  //
+  //
+  //
   // function handleCartButtonClick(v) {
   //   props.onCartButtonClick(v);
   // }
@@ -40,26 +55,68 @@ export default function NavBar(props) {
 
   return (
     <>
-      <div className="my-5 p-2"></div>
-      <div className=" row    fixed-top align-items-center justify-content-around bg    ">
+      <div className="my-4 p-4"></div>
+      <div className=" row    fixed-top   justify-content-lg-evenly border-bottom border-4 border-black border-opacity-75  bg    ">
         <div
-          className="col-4 col-lg-2        "
+          className="col-3 col-lg-1    my-3     "
           id=" logo"
           onClick={() => handleFormButtonClick("productPage")}
         >
           <img
-            className="img-fluid bor   w-50 h-25"
-            src="download.jpeg"
+            className="  img-fluid  "
+            src="shoeslogo-removebg-preview.png"
             alt=""
           />
         </div>
-        <div className="col-5    text-center  col-sm-6 col-md-12  col-lg-5  ">
+        <div className="col-5   ps-5 p-1  text-center    my-1  col-sm-6 col-md-12  col-lg-9  ">
           {/* if user is filled its information successfully then show them logout button for exit */}
-          {loginStatus == "success" && (
-            <div className=" text-dark h5">Welcome {name} </div>
-          )}
 
-          {user ? (
+          {!user && (
+            <div className="    col-12    pt-lg-1    col-sm-6 col-md-12  col-lg-12">
+              <button
+                className=" button1 h6 loginbtn"
+                onClick={handleLoginButtonClickUsingGoogle}
+              >
+                Login using Google
+              </button>
+            </div>
+          )}
+          {loginStatus == "success" && user && (
+            <div className="col-12 my  mx-lg-0 mx-2  text-dark h6 ">
+              Welcome {user.name}{" "}
+            </div>
+          )}
+          {(view == "productPage" ||
+            view == "admin" ||
+            view == "bill" ||
+            (view == "cart" && loginStatus == "success")) && (
+            <div className="col-12    h5  col-sm-6 col-md-12  col-lg-12">
+              {/* {" "}
+            Welcome {} !
+            </div> */}
+
+              <button className="button1 " onClick={handleButtonLogout}>
+                {" "}
+                Logout{" "}
+              </button>
+            </div>
+          )}
+          {/* {(view == "productPage" && view == "admin") || (
+            <div class="search-box  ">
+              <button class="btn-search">
+                <i class="bi bi-search"></i>
+              </button>
+              <input
+                type="text"
+                name="text"
+                className="input-search"
+                onKeyUp={handleChangeKeyUp}
+                placeholder="Type to Search..."
+              />
+            </div>
+          )} */}
+
+          {/* {user ? (
             <>
               <div className="h4 col-2   justify-content-between  ps-4 col-lg-9 ">
                 <button
@@ -88,34 +145,20 @@ export default function NavBar(props) {
                 }}
               >
                 Login
-              </button>
+              </button> 
             </>
-          )}
+          )} */}
         </div>
-        <div className=" cart col-sm-12 col-lg-3    text-end col-3   ">
-          <div className="cartbtn">
-            <button className="cartbtn radius" onClick={handleCartItems}>
-              <i className=" bi-cart2 fs-1  ">
-                {cnt} <div className="text-center h6">Rs. {totalprice}</div>
-              </i>
-            </button>
+        <div className="  col-sm-12 col-lg-1    text-end  pt-3   pt-lg-3 col-4    ">
+          {/* <div className="cartbtn "> */}
+          <div className=" radius loginbtn myb" onClick={handleCartItems}>
+            <i className=" bi-cart3     fs-5   text-black  ">
+              {cnt}{" "}
+              <div className="text-center h6 text-black">Rs. {totalprice}</div>
+            </i>
           </div>
+          {/* </div> */}
         </div>
-        {view != "productPage" ? (
-          ""
-        ) : (
-          <div className="text-center    bg">
-            <input
-              type="text"
-              name="text"
-              size="50"
-              id=""
-              placeholder="Search  Fruits"
-              onKeyUp={handleChangeKeyUp}
-              className=" text-opacity-50  "
-            />
-          </div>
-        )}
       </div>
     </>
   );

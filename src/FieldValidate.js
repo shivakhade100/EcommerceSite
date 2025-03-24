@@ -34,7 +34,7 @@ export default function FieldValidate(event, errorEntity) {
     else if (onlyDigits) {
       for (let i = value.length - 1; i >= 0; i--) {
         const d = value.charCodeAt(i);
-        if (d!=46 && (d < 48 || d > 57) ) {
+        if (d != 46 && (d < 48 || d > 57)) {
           message = "Enter only digits";
           break;
         } //if

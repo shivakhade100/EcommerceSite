@@ -8,6 +8,22 @@ import CartPageItems from "./CartPageItems";
 // import AdminProductForm from "./AdminProductForm";
 import AdminProductPage from "./AdminProductPage";
 import Bill from "./Bill";
+import { PacmanLoader } from "react-spinners";
+// import { DotLottieReact } from "";
+
+import {
+  getAuth,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signInWithPopup,
+} from "firebase/auth";
+import {
+  deleteBackendProduct,
+  getProductsFromBackend,
+} from "./FirebaseProductServices";
+import { addUserToBackend, getUserFromBackend } from "./FirebaseUserServices";
+import Logout from "./Logout";
+import { LottiePlayer } from "lottie-react";
 
 export default function Ecommerce() {
   // useEffect(() => {
@@ -18,7 +34,7 @@ export default function Ecommerce() {
   let [cnt, setCnt] = useState(0);
   let [CartItems, setCartItems] = useState([]);
   let [totalprice, setTotalPrice] = useState(0);
-  let [successmessage, setSuccessMessage] = useState(false);
+  // let [successmessage, setSuccessMessage] = useState(false);
 
   // let [FilteredList, setFilteredList] = useState([]);
   let [productList, setProductList] = useState([]);
@@ -27,149 +43,271 @@ export default function Ecommerce() {
   let [message, setMessage] = useState("");
   // let [target, setTarget] = useState("");
   let [user, setUser] = useState("");
-  let [name, setName] = useState("");
+  // let [name, setName] = useState("");
   let [text, setText] = useState([]);
+  let [flagLoader, setFlagLoader] = useState(false);
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth();
+
+  // useEffect(() => {
+  //   getData();
+  //    let storedUser = localStorage.getItem("user");
+  //   // let storedCart = localStorage.getItem("CartItems");
+  //   // let storedTotalPrice = localStorage.getItem("CartItems");
+  //   let storedLoginStatus = localStorage.getItem("cartItems");
+
+  //   if (storedUser) {
+  //     setUser(JSON.parse(storedUser));
+  //     setLoginStatus(storedLoginStatus || "no");
+  //   }
+
+  // if (storedCart) {
+  //   setCartItems(JSON.parse(storedCart));
+  //   setCnt(JSON.parse(storedCart).length);
+  // }
+
+  // if (storedTotalPrice) {
+  //   setTotalPrice(parseFloat(storedTotalPrice));
+  // }
+  // }, []);
 
   useEffect(() => {
     getDataFromServer();
     //code... get data from backend
-    let storedUser = localStorage.getItem("user");
-    let storedCart = localStorage.getItem("CartItems");
-    let storedTotalPrice = localStorage.getItem("CartItems");
-    let storedLoginStatus = localStorage.getItem("CartItems");
+    // let storedUser = localStorage.getItem("user");
+    // let storedCart = localStorage.getItem("CartItems");
+    // let storedTotalPrice = localStorage.getItem("CartItems");
+    // let storedLoginStatus = localStorage.getItem("cartItems");
 
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      setLoginStatus(storedLoginStatus || "no");
-    }
+    // if (storedUser) {
+    //   setUser(JSON.parse(storedUser));
+    //   setLoginStatus(storedLoginStatus || "no");
+    // }
 
-    if (storedCart) {
-      setCartItems(JSON.parse(storedCart));
-      setCnt(JSON.parse(storedCart).length);
-    }
+    // if (storedCart) {
+    //   setCartItems(JSON.parse(storedCart));
+    //   setCnt(JSON.parse(storedCart).length);
+    // }
 
-    if (storedTotalPrice) {
-      setTotalPrice(parseFloat(storedTotalPrice));
-    }
+    // if (storedTotalPrice) {
+    //   setTotalPrice(parseFloat(storedTotalPrice));
+    // }
   }, []);
 
-  function handleSignUpFormSubmit(event) {
-    let formData = new FormData(event.target);
-    let user = {};
-    for (let data of formData) {
-      user[data[0]] = data[1];
-    }
-    user["role"] = "user";
-    console.log(user);
-    checkUserExists(user);
-    // setView("productPage");
-    // if ((user["role"] = "admin")) {
-    //   setView("adminPage");
+  // function handleSignUpFormSubmit(event) {
+  //   let formData = new FormData(event.target);
+  //   let user = {};
+  //   for (let data of formData) {
+  //     user[data[0]] = data[1];
+  //   }
+  //   user["role"] = "user";
+  //   console.log(user);
+  //   checkUserExists(user);
+  //   // setView("productPage");
+  //   // if ((user["role"] = "admin")) {
+  //   //   setView("adminPage");
+
+  //   // }
+  // }
+  async function getDataFromServer() {
+    // let information = await axios.get("http://localhost:3000/plist");
+    // setProductList(information.data);
+    setFlagLoader(true);
+    let list = await getProductsFromBackend();
+    setFlagLoader(false);
+    list = list.map((e, index) => {
+      e.qty = 0;
+      return e;
+    });
+
+    let usr;
+    let cItems = [];
+    await onAuthStateChanged(auth, (user) => {
+      // console.log(user);
+      usr = {};
+      if (user) {
+        usr.name = user.displayName;
+        usr.email == user.email;
+        if (usr.email == "mankarsiddhesh732@gmail.com") {
+          usr.role = "admin";
+        } else {
+          usr.role = "user";
+        }
+      } else {
+        usr = null;
+      }
+    });
+    setUser(usr);
+    // if(!usr|| usr.role=="user"){
+    //   cItems=window.localStorage.getItem("cartItems")
+    //   if(cItems==null){
+    //     setCartItems([])
+    //     window.localStorage.setItem("cartItems",JSON.stringify([]))
+
+    //   }
+    //   else{
+    //     cItems=JSON.parse(cItems)
+    //     setCartItems(cItems)
+    //   }
 
     // }
+    setProductList(list);
+    setView("productPage");
   }
-  async function getDataFromServer() {
-    let information = await axios.get("http://localhost:3000/plist");
-    setProductList(information.data);
-  }
+  // async function getData() {
+  //   let usr;
+  //   let cItems;
+  //   await onAuthStateChanged(auth, (user) => {
+  //     console.log(user);
+  //     usr = {};
+  //     if (user) {
+  //       usr.name = user.displayName;
+  //       usr.emailid == user.email;
+  //       if (usr.emailid == "mankarsiddhesh732@gmail.com") {
+  //         usr.role = "admin";
+  //       } else {
+  //         usr.role = "user";
+  //       }
+  //     } else {
+  //       usr = null;
+  //     }
+  //   });
+  //   setUser(usr);
+  //   if(!usr|| usr.role=="user"){
+  //     cItems=window.localStorage.getItem("cartItems")
+  //     if(cItems==null){
+  //       setCartItems([])
+  //       window.localStorage.setItem("cartItems",JSON.stringify([0]))
 
-  async function checkUserExists(user) {
-    let response = await axios("http://localhost:3000/users");
-    let data = await response.data;
-    let filteredData = data.filter((e, index) => e.email == user.email);
-    if (filteredData.length >= 1) {
-      console.log("Already Exists");
-      setTimeout(() => {
-        setSignupStatus("");
-        setView("productPage");
-      }, 1000);
-      setSignupStatus("failed");
+  //     }
+  //     else{
+  //       cItems=null
+  //     }
 
-      // setMessage("Sorry... This email-id is already registered.");
-    } else {
-      console.log("new user");
-      addUser(user);
-      // addDataToServer(user)
-    }
-  }
-  async function addUser(user) {
-    let response = await axios.post("http://localhost:3000/users", user);
-    setSignupStatus("success");
-  }
+  //   }
+  // }
+
+  // async function checkUserExists(user) {
+  //   // let response = await axios("http://localhost:3000/users");
+  //   let userlist= await getUserFromBackend()
+  //   let data =  userlist
+  //   let filteredData = data.filter((e, index) => e.email == user.email);
+  //   if (filteredData.length >= 1) {
+  //     console.log("Already Exists");
+  //     setTimeout(() => {
+  //       setSignupStatus("");
+  //       setView("productPage");
+  //     }, 1000);
+  //     setSignupStatus("failed");
+
+  //     // setMessage("Sorry... This email-id is already registered.");
+  //   } else {
+  //     console.log("new user");
+  //     addUser(user);
+  //     // addDataToServer(user)
+  //   }
+  // }
+  // async function addUser(user) {
+  //   // let response = await axios.post("http://localhost:3000/users", user);
+  //   let response=await addUserToBackend(user)
+  //   setUser(response)
+  //   setSignupStatus("success");
+  // }
 
   //Login Operation
-  function handleLoginFormSubmit(event) {
-    let formData = new FormData(event.target);
-    let userData = {};
-    for (let data of formData) {
-      userData[data[0]] = data[1];
-    }
-    console.log("ok... logged in");
-    console.log(userData);
-    checkUser(userData);
-  }
+  // function handleLoginFormSubmit(event) {
+  //   let formData = new FormData(event.target);
+  //   let userData = {};
+  //   for (let data of formData) {
+  //     userData[data[0]] = data[1];
+  //   }
+  //   console.log("ok... logged in");
+  //   console.log(userData);
+  //   checkUser(userData);
+  // }
 
-  async function checkUser(userData) {
-    let response = await axios("http://localhost:3000/users");
-    let data = await response.data;
-    let filteredData = data.filter(
-      (e, index) => e.email == userData.email && e.password == userData.password
-    );
-    if (filteredData.length == 1) {
-      setUser(filteredData[0]);
-      let u = filteredData[0];
-      localStorage.setItem("user", JSON.stringify(filteredData[0]));
-      localStorage.setItem("loginStatus", "success");
-      if (u.role == "user") {
-        setLoginStatus("success");
-        setTimeout(() => {
-          // name = u.name;
-          setName(u.name);
-          setView("productPage");
-        }, 2000);
-      } else if (u.role == "admin") {
-        setLoginStatus("success");
-        setTimeout(() => {
-          // name=u.name
-          setName(u.name);
-          setView("admin");
-        }, 2000);
-      }
-      // addDataToServer(user)
-      // setSuccessMessage(true);
+  // async function checkUser(userData) {
+  //   setFlagLoader(true);
+  //   // let response = await axios("http://localhost:3000/users");
+  //   let userdata= await getUserFromBackend()
+  //   let data =  userdata;
+  //   let filteredData = data.filter(
+  //     (e, index) => e.email == userData.email && e.password == userData.password
+  //   );
+  //   setFlagLoader(false);
+  //   if (filteredData.length == 1) {
+  //     setUser(filteredData[0]);
+  //     let u = filteredData[0];
+  //     localStorage.setItem("user", JSON.stringify(filteredData[0]));
+  //     localStorage.setItem("loginStatus", "success");
+  //     if (u.role == "user") {
+  //       setLoginStatus("success");
+  //       setTimeout(() => {
+  //         // name = u.name;
+  //         setName(u.name);
+  //         setView("productPage");
+  //       }, 2000);
+  //     } else if (u.role == "admin") {
+  //       setLoginStatus("success");
+  //       setTimeout(() => {
+  //         // name=u.name
+  //         setName(u.name);
+  //         setView("admin");
+  //       }, 2000);
+  //     }
+  //     // addDataToServer(user)
+  //     // setSuccessMessage(true);
 
-      // setTimeout(() => {
-      //   setSuccessMessage(false);
-      //   console.log("Login Successful");
-      //   setTimeout(() => {
-      //     setView("productPage");
-      //   }, 1000);
-      // }, 1000);
-    } else {
-      setLoginStatus("failed");
-      setView("Login")
-      setTimeout(() => {
-        setLoginStatus("")
-       
-      }, 1000);
-      
-      
-    }
-   
-    
-  }
+  //     // setTimeout(() => {
+  //     //   setSuccessMessage(false);
+  //     //   console.log("Login Successful");
+  //     //   setTimeout(() => {
+  //     //     setView("productPage");
+  //     //   }, 1000);
+  //     // }, 1000);
+  //   } else {
+  //     setLoginStatus("failed");
+  //     setView("Login");
+  //     setTimeout(() => {
+  //       setLoginStatus("");
+  //     }, 1000);
+  //   }
+  // }
+  // function handleLoginButtonClickUsingGoogle(){
+  //   signInWithPopup(auth, provider)
+  // .then((result) => {
+  //   // This gives you a Google Access Token. You can use it to access the Google API.
+  //   const credential = GoogleAuthProvider.credentialFromResult(result);
+  //   const token = credential.accessToken;
+  //   // The signed-in user info.
+  //   const user = result.user;
+  //   // IdP data available using getAdditionalUserInfo(result)
+  //   // ...
+  // }).catch((error) => {
+  //   // Handle Errors here.
+  //   const errorCode = error.code;
+  //   const errorMessage = error.message;
+  //   // The email of the user's account used.
+  //   const email = error.customData.email;
+  //   // The AuthCredential type that was used.
+  //   const credential = GoogleAuthProvider.credentialFromError(error);
+  //   // ...
+  //   console.log(user);
+
+  // });
+  // }
 
   function handleCartItems() {
     if (cnt <= 0 && totalprice <= 0) {
       setView("noelement");
     } else if (!user) {
-      setMessage("You need to login first!");
+      // setMessage("You need to login first!");
       console.log("you need to login first");
 
       setTimeout(() => {
-        setMessage("");
-
-        setView("Login");
+        // setMessage("");
+        window.alert("you need to login first");
+        // setView("Login");
       }, 1000); // Clear message after 2 seconds
     } else {
       setView("cart");
@@ -216,6 +354,7 @@ export default function Ecommerce() {
 
       setCartItems([...CartItems, newProduct]);
       setTotalPrice(
+        // totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(1)
         totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(1)
       );
     }
@@ -244,7 +383,8 @@ export default function Ecommerce() {
     setCartItems(updatedCart);
 
     setTotalPrice(
-      totalprice + product.mrp * (1 - product.discount / 100).toFixed(1)
+      // totalprice + product.mrp * (1 - product.discount / 100).toFixed(1)
+      totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(0)
     );
     console.log(updatedCart);
   }
@@ -276,7 +416,8 @@ export default function Ecommerce() {
       setTotalPrice(0);
     } else {
       setTotalPrice(
-        totalprice - product.mrp * (1 - product.discount / 100).toFixed(1)
+        // totalprice - product.mrp * (1 - product.discount / 100).toFixed(1)
+        totalprice - newProduct.mrp * (1 - newProduct.discount / 100).toFixed(0)
       );
     }
     console.log(updatedCart);
@@ -290,13 +431,15 @@ export default function Ecommerce() {
 
   //handle logout button clicked
   function handleLogoutClick() {
-    setUser(null); // Clear user data
+    // setUser(null);
+    let Usr;
+    if (Usr == null) setUser(""); // Clear user data
     setView("productPage");
     setLoginStatus("no"); // Reset login status
     setSignupStatus("no"); // Reset signup status (if needed)
     setMessage(); // Clear any messages
     localStorage.removeItem("user");
-    // localStorage.removeItem("loginStatus");
+    localStorage.removeItem("loginStatus");
 
     //  setView("Login");
   }
@@ -317,16 +460,19 @@ export default function Ecommerce() {
   }
 
   async function deleteProductFromServer(product) {
-    let response = await axios.delete(
-      "http://localhost:3000/plist/" + product.id
-    );
+    setFlagLoader(true);
+    // let response = await axios.delete(
+    //   "http://localhost:3000/plist/" + product.id
+    // );
 
-    let list = productList.filter((e, index) => e.id != product.id);
+    let list = await deleteBackendProduct(product);
     console.log("list in delete ecom");
     console.log(list);
+
     setProductList(list);
+    setFlagLoader(false);
     setMessage(`Product - ${product.name} deleted successfully`);
-    clearMessage();
+    // clearMessage();
   }
   function clearMessage() {
     setTimeout(() => {
@@ -400,38 +546,118 @@ export default function Ecommerce() {
     setView("bill");
   }
   function handleChangeKeyUp(event) {
-    let t = event.target.value;
-
-    let list = [...productList];
-    list = list.filter((e, index) => e.name.toLowerCase().startsWith(t.toLowerCase()));
-    setProductList(list);
+    if (event) {
+      let t = event.target.value;
+      let list = [...productList];
+      list = list.filter((e, index) =>
+        e.name.toLowerCase().startsWith(t.toLowerCase())
+      );
+      setProductList(list);
+      return list;
+    }
+    // } else {
+    //   setProductList(productList);
+    //   setView("productPage");
+    // }
 
     console.log(text);
   }
+  if (flagLoader) {
+    return <div className="  text-center my-5 d-flex justify-content-center">
+      <PacmanLoader size={25} color={"green"} className="" />
+    </div>;
+  }
+  function handleLoginButtonClickUsingGoogle() {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+        // console.log(user);
+        let usr = { user };
+        usr.name = user.displayName;
+        usr.emailid = user.email;
+        if (usr.emailid == "mankarsiddhesh732@gmail.com") {
+          usr.role = "admin";
+          setView("admin");
+          setLoginStatus("success");
+        } else {
+          usr.role = "user";
+          setView("productPage");
+          setLoginStatus("success");
+        }
+        setUser(usr);
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+  }
+
   //list button check
   // function handleProductListClick(view){
   //   setView(view)
   // }
+  function handleButtonLogout() {
+    // setMessage("Thank you for Logging in!");
+    // setTimeout(() => {
+    //   setMessage("");
+    // }, 3000);
+    auth.signOut();
+    setView("productPage");
+    setUser("");
+    if (cnt <= 0 && totalprice <= 0) {
+      setView("productPage");
+    } else if (!user) {
+      // setMessage("You need to login first!");
+      // console.log("you need to login first");
+      setCartItems("");
+      setTimeout(() => {
+        // setMessage("");
+        window.alert("you need to login first");
+        // setView("Login");
+      }, 1000); // Clear message after 2 seconds
+    }
+    // setCartItems("")
+
+    // setView("logout");
+    // setTimeout(() => {
+    //   setView("");
+    // }, 3000);
+  }
   return (
     <>
-      <div className="col-sm-12 col-md-6 col-lg-12">
+      <div className="">
         <NavBar
           cnt={cnt}
           totalprice={totalprice}
           CartItems={CartItems}
           user={user}
-          name={name}
+          // name={name}
           loginStatus={loginStatus}
+          view={view}
           onFormButtonClick={handleFormButtonClick}
+          onButtonLogout={handleButtonLogout}
           // onCartButtonClick={handleCartButtonClick}
-          onLogoutClick={handleLogoutClick}
+          // onLogoutClick={handleLogoutClick}
           onCartItems={handleCartItems}
           onChangeKeyUp={handleChangeKeyUp}
+          onLoginButtonClickUsingGoogle={handleLoginButtonClickUsingGoogle}
         ></NavBar>
       </div>
-      <div className="  colour">
+      <div className="  productbg ">
         {view == "productPage" && (
-          <div className="col-lg-12 col-sm-12 col-md-6 my-">
+          <div className="">
             <ProductPage
               productList={productList}
               text={text}
@@ -442,8 +668,9 @@ export default function Ecommerce() {
             ></ProductPage>
           </div>
         )}
+        {/* {view == "logout" && <Logout message={message} />} */}
         {view == "Login" && (
-          <div className=" text-white html">
+          <div className=" text-white productbg">
             <Login
               user={user}
               view={view}
@@ -456,7 +683,7 @@ export default function Ecommerce() {
           </div>
         )}
         {view == "SignUp" && (
-          <div className="html">
+          <div className="productbg">
             <SignUpPage
               view={view}
               signupstatus={signupstatus}
@@ -469,10 +696,11 @@ export default function Ecommerce() {
           </div>
         )}
         {view == "cart" && (
-          <div className=" html">
+          <div className="productbg vh-100  v">
             <CartPageItems
               CartItems={CartItems}
               totalprice={totalprice}
+              // cItems={cItems}
               // product={product}
               onIncrement={handleIncrement}
               onDecrement={handleDecrement}
@@ -483,7 +711,7 @@ export default function Ecommerce() {
           </div>
         )}
         {view == "bill" && (
-          <div className=" col-12 col-lg-12 vh-100    col-sm-6 html">
+          <div className="  vh-100    text-black  productbg">
             <Bill
               // onChangeButtonClick={handleChangeButtonClick}
               totalprice={totalprice}
@@ -494,8 +722,8 @@ export default function Ecommerce() {
           </div>
         )}
         {view == "noelement" && (
-          <div className="my-5 p-5 vh-100  html col-lg-12 col-sm-12 col-md-6">
-            <div className=" p-3    text-white text-center my-5 h4 ">
+          <div className="my-4 p-5 vh-100  productbg col-lg-12 col-sm-12 col-md-6">
+            <div className=" p-3    text-black text-center my-5 h4 ">
               Cart is Empty.{" "}
               <a href="#" onClick={handleStartButtonClick}>
                 Start
@@ -506,7 +734,7 @@ export default function Ecommerce() {
         )}
         {/* {view == "admin" && <AdminProductForm adminView={adminView} />} */}
         {view == "admin" && (
-          <div className=" col-lg-12 col-sm-12 col-md-6">
+          <div className=" col-lg-12 col-sm-12  productbg col-md-6">
             <AdminProductPage
               productList={productList}
               view={view}

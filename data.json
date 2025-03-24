@@ -21,7 +21,7 @@
       "name": "grapes",
       "image": "grapes.jpg",
       "unit": "kg",
-      "mrp": "200",
+      "mrp": "180",
       "discount": "30",
       "inStock": false,
       "qty": 0,
@@ -213,6 +213,14 @@
       "inStock": true,
       "qty": 0,
       "type": "Non-Organic"
+    },
+    {
+      "id": "a808",
+      "name": "cabbage",
+      "mrp": "700",
+      "discount": "14",
+      "unit": "kg",
+      "inStock": "yes"
     }
   ]
 }

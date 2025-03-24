@@ -70,9 +70,9 @@ export default function AdminProductPage(props) {
 
   return (
     <>
-      <div className=""></div>
+      
       {adminView == "list" && (
-        <div className=" text-center      text-white html  ">
+        <div className=" text-center      p-1 p-lg-2   mt-4 mt-lg-0  text-black  ">
           <a href="#" className="h5" onClick={handleLIstFormClick}>
             {" "}
             Add the new product
@@ -80,7 +80,7 @@ export default function AdminProductPage(props) {
         </div>
       )}
       {adminView == "list" && (
-        <div className="row  html  p-5   text-center ">
+        <div className="row  productbg  p-5   text-center ">
           {productList.map((e, index) => (
             <AdminProduct
               product={e}
@@ -98,7 +98,7 @@ export default function AdminProductPage(props) {
       )}
 
       {(adminView == "add" || adminView == "edit") && (
-        <div className="  html  p-5  vh-100 text-center ">
+        <div className="  productbg  p-5  vh-100 text-center ">
           <AdminProductForm
             adminView={adminView}
             productList={productList}
@@ -106,6 +106,7 @@ export default function AdminProductPage(props) {
             onProductListClick={handleProductListClick}
             onProductAddFormSubmit={handleProductAddEditFormSubmit}
             onProductEditFormSubmit={handleProductAddEditFormSubmit}
+            
           />
         </div>
       )}
