@@ -34,9 +34,10 @@ export default function Bill(props) {
     BillObj.soldProducts = CartItems;
     BillObj = await addBillToBackend(BillObj);
     b.lastbillnumber = currentBillNumber;
-    // let billId = BillObj.id;
+    let billId = BillObj.id;
+    
     await updateBackendLastBillNumber(b);
-    // console.log(billId);
+    console.log(billId);
     window.localStorage.setItem("cartItems", JSON.stringify([]));
     let message = `I am ${user.name}.Its link is ${window.location}.My Bill Number is ${currentBillNumber}`;
     setFlagLoader(false);

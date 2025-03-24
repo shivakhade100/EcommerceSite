@@ -72,7 +72,20 @@ export default function Ecommerce() {
   // }, []);
 
   useEffect(() => {
+    if(window.location.search==""){
     getDataFromServer();
+    }else{
+      let params=new URLSearchParams(window.location.search)
+      let billId=params.get("id")
+      if(billId==null){
+        setbill(null)
+      setView("FinalBillPage")
+      return;
+}
+else{
+  getBill(billId)
+}
+    }
     //code... get data from backend
     // let storedUser = localStorage.getItem("user");
     // let storedCart = localStorage.getItem("CartItems");
@@ -745,6 +758,7 @@ export default function Ecommerce() {
             />
           </div>
         )}
+        {view=="FinalBillPage"&&(<Billpage/>)}
       </div>
     </>
   );
