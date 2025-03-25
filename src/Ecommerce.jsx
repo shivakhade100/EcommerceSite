@@ -25,7 +25,7 @@ import { addUserToBackend, getUserFromBackend } from "./FirebaseUserServices";
 import Logout from "./Logout";
 import { LottiePlayer } from "lottie-react";
 import Billpage from "./Billpage";
-import { addBackendDataToBill } from "./FirebaseBillNumberServices";
+import {importBackendDataToBill } from "./FirebaseBillNumberServices";
 
 export default function Ecommerce() {
   // useEffect(() => {
@@ -91,7 +91,7 @@ export default function Ecommerce() {
           
         getBill(billId);
       }
-      
+      setView("")
         handleBackendData();
     }
     //code... get data from backend
@@ -120,11 +120,11 @@ export default function Ecommerce() {
     setFlagLoader(false)
     console.log(data);
 
-    setCartItems(data);
+     setCartItems(data);
   }
   async function getBill(billId) {
     setFlagLoader(true)
-    let b=await addBackendDataToBill(billId);
+    let b=await importBackendDataToBill(billId);
     console.log(b);
     if(b==null){
       setbill(b)
@@ -132,7 +132,7 @@ export default function Ecommerce() {
       setView("FinalBillPage");
       return;
     }
-    b.date=new Date(b.date.toDate())
+    // b.date=new Date(b.date.toDate())
     setbill(b)
     setView("FinalBillPage");
     setFlagLoader(false)
@@ -795,7 +795,7 @@ export default function Ecommerce() {
           </div>
         )}
         {view == "FinalBillPage" && <Billpage CartItems={CartItems}
-        totalprice={totalprice} />}
+        totalprice={totalprice} user={user} />}
       </div>
     </>
   );

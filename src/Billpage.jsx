@@ -1,10 +1,14 @@
 import React from "react";
-import { addBackendDataToBill } from "./FirebaseBillNumberServices";
+// import { addBackendDataToBill } from "./FirebaseBillNumberServices";
 
 export default function Billpage(props) {
   let {user}=props
   let { CartItems } = props;
-  let { totalprice } = props;
+  let { totalprice } = props
+  let {data}=props;
+  
+  const currentDate = new Date().toLocaleDateString();
+
   // async function name(params) {
     
   //   let data=await addBackendDataToBill()

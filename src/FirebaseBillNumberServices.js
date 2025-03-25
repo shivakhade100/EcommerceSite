@@ -46,7 +46,7 @@ async function updateBackendLastBillNumber(b) {
   await updateDoc(BillRef, b);
 }
 
-async function addBackendDataToBill() {
+async function importBackendDataToBill() {
   const response = await getDocs(collection(db, "bills"));
   let data = [];
   response.forEach((doc) => {
@@ -60,5 +60,5 @@ export {
   getLastBillNumberFromBackend,
   addBillToBackend,
   updateBackendLastBillNumber,
-  addBackendDataToBill,
+  importBackendDataToBill,
 };
