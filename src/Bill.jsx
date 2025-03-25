@@ -45,7 +45,7 @@ export default function Bill(props) {
       "https://api.whatsapp.com/send?phone=918999181372&text=" + message;
   }
   if (flagLoader) {
-    return <div className=" justify-content-center d-flex">
+    return <div className=" justify-content-center d-flex my-3">
       <PacmanLoader size={24} color={"green"} className="text-center" />
     </div>;
   }

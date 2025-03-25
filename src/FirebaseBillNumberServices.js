@@ -1,4 +1,11 @@
-import { addDoc, collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "./firebase";
 // async function getLastBillNumberFromBackend(lastbillnumber) {
 //   const lastbillnum = await getDoc(doc(db, "lastBillnumber",lastbillnumber));
@@ -11,11 +18,11 @@ import { db } from "./firebase";
 // }
 async function getLastBillNumberFromBackend() {
   const response = await getDocs(collection(db, "lastBillnumber"));
-  let lastnum=[];
+  let lastnum = [];
   response.forEach((doc) => {
-     lastnum.push({ id:doc.id,...doc.data()});
-  //   obj.id = doc.id;
-  //   lastnum.push(obj);
+    lastnum.push({ id: doc.id, ...doc.data() });
+    //   obj.id = doc.id;
+    //   lastnum.push(obj);
   });
   return lastnum[0];
 }
@@ -31,7 +38,7 @@ async function getLastBillNumberFromBackend() {
 //   // console.log("Document written with ID: ", billRef.id);
 // }
 async function addBillToBackend(BillObj) {
-  const productRef = await addDoc(collection(db, "bills"),BillObj);
+  const productRef = await addDoc(collection(db, "bills"), BillObj);
   console.log("Document written with ID: ", productRef.id);
 }
 async function updateBackendLastBillNumber(b) {
@@ -41,13 +48,13 @@ async function updateBackendLastBillNumber(b) {
 
 async function addBackendDataToBill() {
   const response = await getDocs(collection(db, "bills"));
-  let data=[];
+  let data = [];
   response.forEach((doc) => {
-     data.push({ id:doc.id,...doc.data()});
-  //   obj.id = doc.id;
-  //   lastnum.push(obj);
+    data.push({ id: doc.id, ...doc.data() });
+    //   obj.id = doc.id;
+    //   lastnum.push(obj);
   });
-  return data;
+  return data[0];
 }
 export {
   getLastBillNumberFromBackend,
