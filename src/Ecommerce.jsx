@@ -24,6 +24,8 @@ import {
 import { addUserToBackend, getUserFromBackend } from "./FirebaseUserServices";
 import Logout from "./Logout";
 import { LottiePlayer } from "lottie-react";
+import Billpage from "./Billpage";
+import { addBackendDataToBill } from "./FirebaseBillNumberServices";
 
 export default function Ecommerce() {
   // useEffect(() => {
@@ -46,6 +48,7 @@ export default function Ecommerce() {
   // let [name, setName] = useState("");
   let [text, setText] = useState([]);
   let [flagLoader, setFlagLoader] = useState(false);
+  let [bill,setbill]=useState("")
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
 
@@ -72,19 +75,24 @@ export default function Ecommerce() {
   // }, []);
 
   useEffect(() => {
-    if(window.location.search==""){
-    getDataFromServer();
-    }else{
-      let params=new URLSearchParams(window.location.search)
-      let billId=params.get("id")
-      if(billId==null){
-        setbill(null)
-      setView("FinalBillPage")
-      return;
-}
-else{
-  getBill(billId)
-}
+    if (window.location.search == "") {
+      getDataFromServer();
+    } else {
+      let params = new URLSearchParams(window.location.search);
+      let billId = params.get("id");
+      if (billId == null) {
+        // invali link
+        setbill(null);
+        
+        return;
+      } else {
+        console.log(billId);
+        
+          
+        getBill(billId);
+      }
+      
+        handleBackendData();
     }
     //code... get data from backend
     // let storedUser = localStorage.getItem("user");
@@ -106,6 +114,32 @@ else{
     //   setTotalPrice(parseFloat(storedTotalPrice));
     // }
   }, []);
+  async function handleBackendData() {
+    setFlagLoader(true)
+    let data = await addBackendDataToBill();
+    setFlagLoader(false)
+    console.log(data);
+
+    setCartItems(data);
+  }
+  async function getBill(billId) {
+    setFlagLoader(true)
+    let b=await addBackendDataToBill(billId);
+    console.log(b);
+    if(b==null){
+      setbill(b)
+      setFlagLoader(false)
+      setView("FinalBillPage");
+      return;
+    }
+    b.date=new Date(b.date.toDate())
+    setbill(b)
+    setView("FinalBillPage");
+    setFlagLoader(false)
+    
+
+    
+  }
 
   // function handleSignUpFormSubmit(event) {
   //   let formData = new FormData(event.target);
@@ -576,9 +610,11 @@ else{
     console.log(text);
   }
   if (flagLoader) {
-    return <div className="  text-center my-5 d-flex justify-content-center">
-      <PacmanLoader size={25} color={"green"} className="" />
-    </div>;
+    return (
+      <div className="  text-center my-5 d-flex justify-content-center">
+        <PacmanLoader size={25} color={"green"} className="" />
+      </div>
+    );
   }
   function handleLoginButtonClickUsingGoogle() {
     signInWithPopup(auth, provider)
@@ -758,7 +794,8 @@ else{
             />
           </div>
         )}
-        {view=="FinalBillPage"&&(<Billpage/>)}
+        {view == "FinalBillPage" && <Billpage CartItems={CartItems}
+        totalprice={totalprice} />}
       </div>
     </>
   );

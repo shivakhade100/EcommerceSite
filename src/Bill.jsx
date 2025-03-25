@@ -4,7 +4,7 @@ import {
   getLastBillNumberFromBackend,
   updateBackendLastBillNumber,
 } from "./FirebaseBillNumberServices";
-import { BeatLoader } from "react-spinners";
+import { BeatLoader, PacmanLoader } from "react-spinners";
 // import { updateBackendProduct } from "./FirebaseProductServices";
 import { logEvent } from "firebase/analytics";
 // import {getProductsFromBackend} from './FirebaseProductServices';
@@ -34,18 +34,20 @@ export default function Bill(props) {
     BillObj.soldProducts = CartItems;
     BillObj = await addBillToBackend(BillObj);
     b.lastbillnumber = currentBillNumber;
-    let billId = BillObj.id;
-    
     await updateBackendLastBillNumber(b);
+    let billId = BillObj.id;
     console.log(billId);
+
     window.localStorage.setItem("cartItems", JSON.stringify([]));
-    let message = `I am ${user.name}.Its link is ${window.location}.My Bill Number is ${currentBillNumber}`;
+    let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location}.`;
     setFlagLoader(false);
     window.location =
       "https://api.whatsapp.com/send?phone=918999181372&text=" + message;
   }
   if (flagLoader) {
-    return <BeatLoader size={24} color={"red"} className="text-center" />;
+    return <div className=" justify-content-center d-flex">
+      <PacmanLoader size={24} color={"green"} className="text-center" />
+    </div>;
   }
   //  async function calculateTotal(){
   //   setFlagLoader(true)

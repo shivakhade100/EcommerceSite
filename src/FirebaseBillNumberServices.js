@@ -39,8 +39,19 @@ async function updateBackendLastBillNumber(b) {
   await updateDoc(BillRef, b);
 }
 
+async function addBackendDataToBill() {
+  const response = await getDocs(collection(db, "bills"));
+  let data=[];
+  response.forEach((doc) => {
+     data.push({ id:doc.id,...doc.data()});
+  //   obj.id = doc.id;
+  //   lastnum.push(obj);
+  });
+  return data;
+}
 export {
   getLastBillNumberFromBackend,
   addBillToBackend,
   updateBackendLastBillNumber,
+  addBackendDataToBill,
 };
