@@ -83,10 +83,13 @@ export default function Ecommerce() {
       if (billId == null) {
         // invali link
         setbill(null);
+        setTimeout(() => {
+          setMessage("Invalid Link")
+        }, 3000);
 
         return;
       } else {
-        console.log(billId);
+         console.log("got it");
 
         getBill(billId);
       }
@@ -121,9 +124,9 @@ export default function Ecommerce() {
 
   //    billdata=data
   // }
-  async function getBill(billId) {
+  async function getBill() {
     setFlagLoader(true);
-    let b = await importBackendDataToBill(billId);
+    let b = await importBackendDataToBill();
     console.log("Here is the bill");
     console.log(b);
     if (b == null) {
@@ -405,7 +408,7 @@ export default function Ecommerce() {
       setCartItems([...CartItems, newProduct]);
       setTotalPrice(
         // totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(1)
-        totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(1)
+        totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(2)
       );
     }
     let updatedCart;
@@ -434,7 +437,7 @@ export default function Ecommerce() {
 
     setTotalPrice(
       // totalprice + product.mrp * (1 - product.discount / 100).toFixed(1)
-      totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(0)
+      totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(2)
     );
     console.log(updatedCart);
   }
@@ -467,7 +470,7 @@ export default function Ecommerce() {
     } else {
       setTotalPrice(
         // totalprice - product.mrp * (1 - product.discount / 100).toFixed(1)
-        totalprice - newProduct.mrp * (1 - newProduct.discount / 100).toFixed(0)
+        totalprice - newProduct.mrp * (1 - newProduct.discount / 100).toFixed(2)
       );
     }
     console.log(updatedCart);
