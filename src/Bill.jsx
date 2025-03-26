@@ -35,11 +35,11 @@ export default function Bill(props) {
     BillObj = await addBillToBackend(BillObj);
     b.lastbillnumber = currentBillNumber;
     await updateBackendLastBillNumber(b);
-    // let billId = BillObj.id;
+    let billId = b.id;
     // console.log(billId);
 
     window.localStorage.setItem("cartItems", JSON.stringify([]));
-    let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location}.`;
+    let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${billId}.`;
     setFlagLoader(false);
     window.location =
       "https://api.whatsapp.com/send?phone=918999181372&text=" + message;

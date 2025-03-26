@@ -48,7 +48,7 @@ export default function Ecommerce() {
   // let [name, setName] = useState("");
   let [text, setText] = useState([]);
   let [flagLoader, setFlagLoader] = useState(false);
-  let [bill, setbill] = useState([]);
+  let [bill, setbill] = useState("");
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
 
