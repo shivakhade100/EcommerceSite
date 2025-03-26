@@ -15,6 +15,7 @@ export default function Bill(props) {
   let { name } = props;
   let { user } = props;
   let { message } = props;
+  let {bill}=props
   // let [price,setPrice]=useState("")
   // const phonenumber = `8999181372`;
 
@@ -36,13 +37,14 @@ export default function Bill(props) {
     b.lastbillnumber = currentBillNumber;
     await updateBackendLastBillNumber(b);
     let billId = b.id;
-    // console.log(billId);
+    console.log(billId);
 
     window.localStorage.setItem("cartItems", JSON.stringify([]));
-    let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location}${billId}`;
+    let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location}${billId}git `;
     setFlagLoader(false);
     window.location =
       "https://api.whatsapp.com/send?phone=918999181372&text=" + message;
+      
   }
   if (flagLoader) {
     return <div className=" justify-content-center d-flex my-3">

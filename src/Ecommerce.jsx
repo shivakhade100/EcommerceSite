@@ -48,7 +48,7 @@ export default function Ecommerce() {
   // let [name, setName] = useState("");
   let [text, setText] = useState([]);
   let [flagLoader, setFlagLoader] = useState(false);
-  let [bill, setbill] = useState("");
+  let [bill, setbill] = useState([]);
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
 
@@ -121,9 +121,9 @@ export default function Ecommerce() {
 
   //    billdata=data
   // }
-  async function getBill(id) {
+  async function getBill(billId) {
     setFlagLoader(true);
-    let b = await importBackendDataToBill(id);
+    let b = await importBackendDataToBill(billId);
     console.log("Here is the bill");
     console.log(b);
     if (b == null) {
@@ -133,7 +133,7 @@ export default function Ecommerce() {
       return;
     }
     // b.date=new Date(b.date.toDate())
-    console.log("coming data");
+    console.log("coming datas");
     
 
     setbill(b);
@@ -770,6 +770,7 @@ export default function Ecommerce() {
               user={user}
               name={name}
               CartItems={CartItems}
+              
             />
           </div>
         )}
