@@ -15,7 +15,6 @@ export default function Bill(props) {
   let { name } = props;
   let { user } = props;
   let { message } = props;
-  let {bill}=props
   // let [price,setPrice]=useState("")
   // const phonenumber = `8999181372`;
 
@@ -37,19 +36,20 @@ export default function Bill(props) {
     b.lastbillnumber = currentBillNumber;
     await updateBackendLastBillNumber(b);
     let billId = b.id;
-    console.log(billId);
+    // console.log(billId);
 
     window.localStorage.setItem("cartItems", JSON.stringify([]));
-    let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location}${billId}git `;
+    let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location}`;
     setFlagLoader(false);
     window.location =
       "https://api.whatsapp.com/send?phone=918999181372&text=" + message;
-      
   }
   if (flagLoader) {
-    return <div className=" justify-content-center d-flex my-3">
-      <PacmanLoader size={24} color={"green"} className="text-center" />
-    </div>;
+    return (
+      <div className=" justify-content-center d-flex my-3">
+        <PacmanLoader size={24} color={"green"} className="text-center" />
+      </div>
+    );
   }
   //  async function calculateTotal(){
   //   setFlagLoader(true)
@@ -94,9 +94,8 @@ export default function Bill(props) {
               <div className="col-2  h5 ">Total</div>
             </div>
             {CartItems.map((e, index) => {
-               
               return (
-                <div className="row  "key={e.id}>
+                <div className="row  " key={e.id}>
                   <div className="col-4 text-start h6 ps-3">{`${index + 1}) ${
                     e.name
                   }`}</div>

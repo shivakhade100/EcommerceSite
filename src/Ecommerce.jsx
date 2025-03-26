@@ -132,7 +132,7 @@ export default function Ecommerce() {
       setView("FinalBillPage");
       return;
     }
-    // b.date=new Date(b.date.toDate())
+    b.date=new Date(b.date.toDate())
     console.log("coming datas");
     
 
