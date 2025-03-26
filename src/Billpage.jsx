@@ -3,11 +3,12 @@ import React from "react";
 
 export default function Billpage(props) {
   let {user}=props
-  let { CartItems } = props;
+  // let { CartItems } = props;
   let { totalprice } = props
   let {data}=props;
-  
+  let {bill}=props
   const currentDate = new Date().toLocaleDateString();
+  
 
   // async function name(params) {
     
@@ -22,21 +23,21 @@ export default function Billpage(props) {
             <div className=" mx-auto p-2 pb-1  pt-2 my-auto text-center  h5 ">
               || Shree ||
             </div>
-            <div className="h3 text-center  "> SK Fruit Bazaar </div>
+            <div className="h3 text-center  "> SKians Shoes </div>
             <div className="h5 text-center  ">
               220 , Matalwadi Phata ,Bhugaon- 412115
             </div>
             <div className="text-end pe-3  h5">Date: {currentDate} </div>
-            <div className="h5 ps-5 ">Customer Name : {user.name}</div>
+            <div className="h5 ps-5 ">Customer Name : {bill.customer}</div>
             <div className="row ">
               <div className="col-4 h5  ">Product</div>
               <div className="col-3 h5  text-start ps-0 ">Rate</div>
               <div className="col-3  h5 text-center   ">Quantity</div>
               <div className="col-2  h5 ">Total</div>
             </div>
-            {CartItems.map((e, index) => {
+            {bill.soldProducts.map((e, index) => {
               return (
-                <div className="row ">
+                <div className="row "key={e.id}>
                   <div className="col-4 text-start h6 ps-3">{`${index + 1}) ${
                     e.name
                   }`}</div>
@@ -47,7 +48,7 @@ export default function Billpage(props) {
                         {e.mrp}{" "}
                       </span>{" "}
                       <span className="h5">
-                        {e.mrp - e.mrp * (e.discount / 100).toFixed(0)}
+                        {e.mrp - e.mrp * (e.discount / 100).toFixed(1)}
                       </span>
                     </div>
                   </div>
@@ -55,7 +56,7 @@ export default function Billpage(props) {
                     {e.qty} {e.unit}
                   </div>
                   <div className="col-2 h5">
-                    {e.mrp - e.mrp * (e.discount / 100).toFixed(0)}
+                    {e.mrp - e.mrp * (e.discount / 100).toFixed(1)}
                   </div>
                 </div>
               );
@@ -63,7 +64,7 @@ export default function Billpage(props) {
             <div className="row  my-1">
               <div className="col-9  text-end  col-lg-9 h5">Grand Total : </div>
               <div className="col-3 col-lg- text-start  ps-0 h5">
-                Rs. {totalprice.toFixed(0)}{" "}
+                Rs. {bill.amount.toFixed(1)}{" "}
               </div>
             </div>
           </div>

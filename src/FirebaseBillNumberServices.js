@@ -7,15 +7,17 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
-// async function getLastBillNumberFromBackend(lastbillnumber) {
-//   const lastbillnum = await getDoc(doc(db, "lastBillnumber",lastbillnumber));
-//   if (lastbillnum.exists()) {
-//     console.log(lastbillnum.data());
-//     return lastbillnum.data();
-//   } else {
-//     return null;
-//   }
-// }
+
+async function importBackendDataToBill(id) {
+  const lastbillnum = await getDoc(doc(db, "bills",id));
+  if (lastbillnum.exists()) {
+    console.log(lastbillnum.data());
+    return lastbillnum.data();
+  } else {
+    return null;
+  }
+}
+
 async function getLastBillNumberFromBackend() {
   const response = await getDocs(collection(db, "lastBillnumber"));
   let lastnum = [];
@@ -46,16 +48,18 @@ async function updateBackendLastBillNumber(b) {
   await updateDoc(BillRef, b);
 }
 
-async function importBackendDataToBill() {
-  const response = await getDocs(collection(db, "bills"));
-  let data = [];
-  response.forEach((doc) => {
-    data.push({ id: doc.id, ...doc.data() });
-    //   obj.id = doc.id;
-    //   lastnum.push(obj);
-  });
-  return data[0];
-}
+// async function importBackendDataToBill() {
+//   const response = await getDocs(collection(db, "bills"));
+//   let data = [];
+//   response.forEach((doc) => {
+//     data.push({ id: doc.id, ...doc.data() });
+//     //   obj.id = doc.id;
+//     //   lastnum.push(obj);
+//   });
+//   console.log(data[22]);
+//   return data[0];
+  
+// }
 export {
   getLastBillNumberFromBackend,
   addBillToBackend,

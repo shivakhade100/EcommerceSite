@@ -25,7 +25,7 @@ import { addUserToBackend, getUserFromBackend } from "./FirebaseUserServices";
 import Logout from "./Logout";
 import { LottiePlayer } from "lottie-react";
 import Billpage from "./Billpage";
-import {importBackendDataToBill } from "./FirebaseBillNumberServices";
+import { importBackendDataToBill } from "./FirebaseBillNumberServices";
 
 export default function Ecommerce() {
   // useEffect(() => {
@@ -48,7 +48,7 @@ export default function Ecommerce() {
   // let [name, setName] = useState("");
   let [text, setText] = useState([]);
   let [flagLoader, setFlagLoader] = useState(false);
-  let [bill,setbill]=useState("")
+  let [bill, setbill] = useState([]);
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
 
@@ -83,16 +83,15 @@ export default function Ecommerce() {
       if (billId == null) {
         // invali link
         setbill(null);
-        
+
         return;
       } else {
         console.log(billId);
-        
-          
+
         getBill(billId);
       }
-      setView("")
-        handleBackendData();
+      // setView("FinalBillPage")
+      // handleBackendData();
     }
     //code... get data from backend
     // let storedUser = localStorage.getItem("user");
@@ -114,31 +113,33 @@ export default function Ecommerce() {
     //   setTotalPrice(parseFloat(storedTotalPrice));
     // }
   }, []);
-  async function handleBackendData() {
-    setFlagLoader(true)
-    let data = await addBackendDataToBill();
-    setFlagLoader(false)
-    console.log(data);
+  // async function handleBackendData() {
+  //   setFlagLoader(true)
+  //   let data = await importBackendDataToBill();
+  //   setFlagLoader(false)
+  //   console.log(data);
 
-     setCartItems(data);
-  }
-  async function getBill(billId) {
-    setFlagLoader(true)
-    let b=await importBackendDataToBill(billId);
+  //    billdata=data
+  // }
+  async function getBill(id) {
+    setFlagLoader(true);
+    let b = await importBackendDataToBill(id);
+    console.log("Here is the bill");
     console.log(b);
-    if(b==null){
-      setbill(b)
-      setFlagLoader(false)
+    if (b == null) {
+      setbill(b);
+      setFlagLoader(false);
       setView("FinalBillPage");
       return;
     }
     // b.date=new Date(b.date.toDate())
-    setbill(b)
-    setView("FinalBillPage");
-    setFlagLoader(false)
-    
 
-    
+    setbill(b);
+    // setCartItems(b)
+    setView("FinalBillPage");
+    // handleBackendData()
+    setFlagLoader(false);
+    // console.log(b);
   }
 
   // function handleSignUpFormSubmit(event) {
@@ -794,9 +795,11 @@ export default function Ecommerce() {
             />
           </div>
         )}
-        {view == "FinalBillPage" && <Billpage CartItems={CartItems}
-        totalprice={totalprice} user={user} />}
+        {view == "FinalBillPage" && (
+          <Billpage bill={bill} totalprice={totalprice} user={user} />
+        )}
       </div>
     </>
   );
 }
+// CartItems={CartItems}

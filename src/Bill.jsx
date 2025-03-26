@@ -35,8 +35,8 @@ export default function Bill(props) {
     BillObj = await addBillToBackend(BillObj);
     b.lastbillnumber = currentBillNumber;
     await updateBackendLastBillNumber(b);
-    let billId = BillObj.id;
-    console.log(billId);
+    // let billId = BillObj.id;
+    // console.log(billId);
 
     window.localStorage.setItem("cartItems", JSON.stringify([]));
     let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location}.`;
@@ -79,7 +79,7 @@ export default function Bill(props) {
             <div className=" mx-auto p-2 pb-1  pt-2 my-auto text-center  h5 ">
               || Shree ||
             </div>
-            <div className="h3 text-center  "> SK Fruit Bazaar </div>
+            <div className="h3 text-center  "> SKians Shoes </div>
             <div className="h5 text-center  ">
               220 , Matalwadi Phata ,Bhugaon- 412115
             </div>
@@ -92,8 +92,9 @@ export default function Bill(props) {
               <div className="col-2  h5 ">Total</div>
             </div>
             {CartItems.map((e, index) => {
+               
               return (
-                <div className="row ">
+                <div className="row  "key={e.id}>
                   <div className="col-4 text-start h6 ps-3">{`${index + 1}) ${
                     e.name
                   }`}</div>
