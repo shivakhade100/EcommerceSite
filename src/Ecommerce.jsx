@@ -133,6 +133,8 @@ export default function Ecommerce() {
       return;
     }
     // b.date=new Date(b.date.toDate())
+    console.log("coming data");
+    
 
     setbill(b);
     // setCartItems(b)

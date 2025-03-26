@@ -39,7 +39,7 @@ export default function Bill(props) {
     // console.log(billId);
 
     window.localStorage.setItem("cartItems", JSON.stringify([]));
-    let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location}.`;
+    let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location}${billId}`;
     setFlagLoader(false);
     window.location =
       "https://api.whatsapp.com/send?phone=918999181372&text=" + message;
