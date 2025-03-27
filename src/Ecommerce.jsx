@@ -124,9 +124,9 @@ export default function Ecommerce() {
 
   //    billdata=data
   // }
-  async function getBill(billId) {
+  async function getBill() {
     setFlagLoader(true);
-    let b = await importBackendDataToBill(billId);
+    let b = await importBackendDataToBill();
     console.log("Here is the bill");
     console.log(b);
     if (b == null) {

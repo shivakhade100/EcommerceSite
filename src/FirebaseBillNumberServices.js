@@ -8,11 +8,11 @@ import {
 } from "firebase/firestore";
 import { db } from "./firebase";
 
-async function importBackendDataToBill(billId) {
-  const lastbill = await getDoc(doc(db, "bills",billId));
-  if (lastbill.exists()) {
-    console.log(lastbill.data());
-    return lastbill;
+async function importBackendDataToBill(id) {
+  const bill = await getDoc(doc(db, "bills",id));
+  if (bill.exists()) {
+    console.log(bill.data());
+    return bill;
   } else {
     return null;
   }

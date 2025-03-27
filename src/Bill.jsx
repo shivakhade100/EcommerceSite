@@ -39,13 +39,13 @@ export default function Bill(props) {
     // console.log(billId);
 
     window.localStorage.setItem("cartItems", JSON.stringify([]));
-    // let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location} `;
-    let billUrl = `https://siddreactapp1.netlify.app/?id=${billId}`;
-    let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${billUrl}`;
-    let encodedMessage = encodeURIComponent(message);
+     let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location}${billId} `;
+    // let billUrl = `https://siddreactapp1.netlify.app/?id=${billId}`;
+    // let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${billUrl}`;
+    // let encodedMessage = encodeURIComponent(message);
     setFlagLoader(false);
     window.open(
-      `https://api.whatsapp.com/send?phone=918999181372&text=${encodedMessage}`
+      `https://api.whatsapp.com/send?phone=918999181372&text=${message}`
     );
   }
   if (flagLoader) {

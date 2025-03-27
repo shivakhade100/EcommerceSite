@@ -27,15 +27,15 @@ async function getProductsFromBackend() {
   });
   return list;
 }
-async function getSingleProductFromBackend(id) {
-  const docSnap = await getDoc(doc(db, "students", id));
-  if (docSnap.exists()) {
-    console.log(docSnap.data());
-    return docSnap.data();
-  } else {
-    return null;
-  }
-}
+// async function getSingleProductFromBackend(id) {
+//   const docSnap = await getDoc(doc(db, "products", id));
+//   if (docSnap.exists()) {
+//     console.log(docSnap.data());
+//     return docSnap.data();
+//   } else {
+//     return null;
+//   }
+// }
 async function updateBackendProduct(p) {
   const productRef = doc(db, "products", p.id);
   await updateDoc(productRef, p);
@@ -50,7 +50,7 @@ async function addProductToBackend(s) {
 
 export {
   getProductsFromBackend,
-  getSingleProductFromBackend,
+  // getSingleProductFromBackend,
   updateBackendProduct,
   deleteBackendProduct,
   addProductToBackend,
