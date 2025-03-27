@@ -206,7 +206,6 @@ import {
   addProductToBackend,
   updateBackendProduct,
 } from "./FirebaseProductServices.js";
-import { addDoc, collection } from "firebase/firestore";
 // import { addDoc, collection } from "firebase/firestore";
 // {
 //   "id": "1",

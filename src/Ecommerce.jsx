@@ -8,7 +8,7 @@ import CartPageItems from "./CartPageItems";
 // import AdminProductForm from "./AdminProductForm";
 import AdminProductPage from "./AdminProductPage";
 import Bill from "./Bill";
-import { PacmanLoader, RingLoader } from "react-spinners";
+import {  RingLoader } from "react-spinners";
 // import { DotLottieReact } from "";
 
 import {
@@ -398,7 +398,7 @@ export default function Ecommerce() {
     let index = temp.indexOf(product);
     let newProduct = { ...temp[index] };
 
-    if (newProduct.qty === 0) {
+    if (newProduct.qty == 0) {
       newProduct.qty = 1;
       setCnt(cnt + 1);
       temp[index] = newProduct;
@@ -407,11 +407,11 @@ export default function Ecommerce() {
       setCartItems([...CartItems, newProduct]);
       setTotalPrice(
         // totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(1)
-        totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(2)
+        (totalprice + product.mrp * (1 - product.discount / 100)).toFixed(0)
       );
     }
     let updatedCart;
-    if (CartItems.length > 0) {
+    if (CartItems &&CartItems.length > 0) {
       updatedCart = [...CartItems];
     } else {
       updatedCart = [];
@@ -419,49 +419,7 @@ export default function Ecommerce() {
     updatedCart.push(newProduct);
     setCartItems(updatedCart);
   }
-  // function handleAddToCart(product) {
-  //   // 1. Find the product in productList
-  //   const productIndex = productList.findIndex(p => p.id === product.id);
-  //   if (productIndex === -1) return; // Product not found
-
-  //   // 2. Create updated product with quantity
-  //   const productToAdd = {
-  //     ...productList[productIndex],
-  //     qty: 1,
-  //     discountedPrice: parseFloat((product.mrp * (1 - product.discount / 100)).toFixed(2))
-  //   };
-
-  //   // 3. Update product list (set qty to 1 if it was 0)
-  //   const updatedProductList = productList.map(p =>
-  //     p.id === product.id ? { ...p, qty: p.qty === 0 ? 1 : p.qty } : p
-  //   );
-
-  //   // 4. Update cart items
-  //   const existingCartItemIndex = CartItems.findIndex(item => item.id === product.id);
-  //   let updatedCartItems;
-
-  //   if (existingCartItemIndex >= 0) {
-  //     // Product already in cart - increment quantity
-  //     updatedCartItems = CartItems.map(item =>
-  //       item.id === product.id
-  //         ? { ...item, qty: item.qty + 1 }
-  //         : item
-  //     );
-  //   } else {
-  //     // New product - add to cart
-  //     updatedCartItems = [...CartItems, productToAdd];
-  //   }
-
-  //   // 5. Calculate new total price
-  //   const priceToAdd = parseFloat((product.mrp * (1 - product.discount / 100)).toFixed(2));
-  //   const newTotalPrice = parseFloat((totalprice + Number(priceToAdd)).toFixed(2));
-
-  //   // 6. Update all states in one batch
-  //   setProductList(updatedProductList);
-  //   setCartItems(updatedCartItems);
-  //   setTotalPrice(Number(newTotalPrice));
-  //   setCnt(cnt => cnt + 1); // Better functional update
-  // }
+ 
   //Handle "+"
   function handleIncrement(product) {
     let temp = [...productList];
@@ -479,32 +437,13 @@ export default function Ecommerce() {
 
     setTotalPrice(
       // totalprice + product.mrp * (1 - product.discount / 100).toFixed(1)
-      totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(2)
+      (totalprice + product.mrp * (1 - product.discount / 100)).toFixed(0)
     );
     console.log(updatedCart);
   }
   //handlecart "+"
 
-  // function handleIncrementCart(product) {
-  //   let temp = [...productList];
-  //   let index = temp.indexOf(product);
-  //   let newProduct = { ...temp[index] };
-  //   newProduct.qty++;
-  //   temp[index] = newProduct;
-  //   setProductList([...temp]);
-
-  //   //Update Cart Items and total price
-  //   let updatedCart = CartItems.map((item) =>
-  //     item.id === product.id ? { ...item, qty: item.qty + 1 } : item
-  //   );
-  //   setCartItems(updatedCart);
-
-  //   setTotalPrice(
-  //     // totalprice + product.mrp * (1 - product.discount / 100).toFixed(1)
-  //     totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(2)
-  //   );
-  //   console.log(updatedCart);
-  // }
+ 
 
   //Handle "-"
   function handleDecrement(product) {
@@ -535,45 +474,12 @@ export default function Ecommerce() {
     } else {
       setTotalPrice(
         // totalprice - product.mrp * (1 - product.discount / 100).toFixed(1)
-        totalprice - newProduct.mrp * (1 - newProduct.discount / 100).toFixed(2)
+        (totalprice - product.mrp * (1 - product.discount / 100)).toFixed(0)
       );
     }
     console.log(updatedCart);
   }
-  //handleCart "-"
-  // function handleDecrementCart(product) {
-  //   let temp = [...productList];
-  //   let index = temp.indexOf(product);
-  //   let newProduct = { ...temp[index] };
-  //   newProduct.qty--;
-  //   temp[index] = newProduct;
-  //   setProductList([...temp]);
-
-  //   let updatedCart;
-  //   console.log(updatedCart);
-
-  //   if (newProduct.qty === 0) {
-  //     setCnt(cnt - 1); // Reduce cart count
-  //     updatedCart = CartItems.filter((item) => item.id !== product.id); // Remove item from cart
-  //   } else {
-  //     updatedCart = CartItems.map((item) =>
-  //       item.id === product.id ? { ...item, qty: item.qty - 1 } : item
-  //     );
-  //   }
-
-  //   setCartItems(updatedCart);
-
-  //   // If cart is empty, reset total price to 0
-  //   if (updatedCart.length === 0) {
-  //     setTotalPrice(0);
-  //   } else {
-  //     setTotalPrice(
-  //       // totalprice - product.mrp * (1 - product.discount / 100).toFixed(1)
-  //       totalprice - newProduct.mrp * (1 - newProduct.discount / 100).toFixed(2)
-  //     );
-  //   }
-  //   console.log(updatedCart);
-  // }
+  
 
   //Sign_UP & Login Button Handle
   function handleFormButtonClick(view) {

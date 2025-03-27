@@ -155,7 +155,7 @@ export default function NavBar(props) {
           <div className=" radius loginbtn myb" onClick={handleCartItems}>
             <i className=" bi-cart3     fs-5   text-black  ">
               {cnt}{" "}
-              <div className="text-center h6 text-black">Rs. {totalprice.toFixed(1)}</div>
+              <div className="text-center h6 text-black">Rs. {(totalprice).toFixed(0)}</div>
             </i>
           </div>
           {/* </div> */}
