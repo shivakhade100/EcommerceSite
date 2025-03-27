@@ -407,7 +407,7 @@ export default function Ecommerce() {
       setCartItems([...CartItems, newProduct]);
       setTotalPrice(
         // totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(1)
-        (totalprice + product.mrp * (1 - product.discount / 100)).toFixed(0)
+        totalprice + product.mrp * (1 - product.discount / 100)
       );
     }
     let updatedCart;
@@ -437,7 +437,7 @@ export default function Ecommerce() {
 
     setTotalPrice(
       // totalprice + product.mrp * (1 - product.discount / 100).toFixed(1)
-      (totalprice + product.mrp * (1 - product.discount / 100)).toFixed(0)
+      totalprice + product.mrp * (1 - product.discount / 100)
     );
     console.log(updatedCart);
   }
@@ -474,7 +474,7 @@ export default function Ecommerce() {
     } else {
       setTotalPrice(
         // totalprice - product.mrp * (1 - product.discount / 100).toFixed(1)
-        (totalprice - product.mrp * (1 - product.discount / 100)).toFixed(0)
+        totalprice - product.mrp * (1 - product.discount / 100)
       );
     }
     console.log(updatedCart);
