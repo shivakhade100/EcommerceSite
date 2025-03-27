@@ -11,8 +11,8 @@ import { db } from "./firebase";
 async function importBackendDataToBill(id) {
   const lastbillnum = await getDoc(doc(db, "bills",id));
   if (lastbillnum.exists()) {
-    console.log(lastbillnum.data());
-    return lastbillnum.data();
+    console.log(lastbillnum);
+    return lastbillnum;
   } else {
     return null;
   }

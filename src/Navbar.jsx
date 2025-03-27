@@ -33,6 +33,7 @@ export default function NavBar(props) {
     props.onLogoutClick();
   }
   function handleChangeKeyUp(event) {
+    event.preventDefault()
     props.onChangeKeyUp(event);
   }
   function handleLoginButtonClickUsingGoogle() {
@@ -107,7 +108,7 @@ export default function NavBar(props) {
                 <i class="bi bi-search"></i>
               </button>
               <input
-                type="text"
+                type="search"
                 name="text"
                 className="input-search"
                 onKeyUp={handleChangeKeyUp}
@@ -154,7 +155,7 @@ export default function NavBar(props) {
           <div className=" radius loginbtn myb" onClick={handleCartItems}>
             <i className=" bi-cart3     fs-5   text-black  ">
               {cnt}{" "}
-              <div className="text-center h6 text-black">Rs. {totalprice}</div>
+              <div className="text-center h6 text-black">Rs. {totalprice.toFixed(1)}</div>
             </i>
           </div>
           {/* </div> */}

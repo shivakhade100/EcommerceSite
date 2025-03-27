@@ -36,7 +36,7 @@ export default function Product(props) {
         {product.name}{" "}
         {/* {product.discount > 0 ? ` -(${product.discount}%)` : " "} */}
       </div>
-      {product.discount == 0 && <h6> Rs {product.mrp}</h6>}
+      {product.discount === 0 && <h6> Rs {product.mrp}</h6>}
       {product.discount != 0 && (
         <h6>
           Rs{" "}
@@ -48,7 +48,7 @@ export default function Product(props) {
       )}
 
       <div className=" my-3  me-auto ms-auto p-2  mt-auto mb-auto">
-        {product.qty == 0 && (
+        {product.qty === 0 && (
           <button
             className={product.inStock ? " button1 " : " btn  btn-danger"}
             disabled={!product.inStock}
@@ -75,7 +75,7 @@ export default function Product(props) {
           <div className=" col-6    text-center  col-lg-6     clr h7 ">
             <div className=" col-lg-12  col-12 ">qty: {product.qty} </div>
             <div className=" col-lg-12 col-12">
-              {product.qty != 0 ? `Rs:${displayprice}` : " "}
+              {product.qty != 0 ? `Rs:${displayprice.toFixed(2)}` : " "}
             </div>
             {/* <div className="col-1 col-lg-5  clr "></div> */}
           </div>

@@ -4,7 +4,7 @@ import {
   getLastBillNumberFromBackend,
   updateBackendLastBillNumber,
 } from "./FirebaseBillNumberServices";
-import { BeatLoader, PacmanLoader } from "react-spinners";
+import { BeatLoader, PacmanLoader, RingLoader } from "react-spinners";
 // import { updateBackendProduct } from "./FirebaseProductServices";
 import { logEvent } from "firebase/analytics";
 // import {getProductsFromBackend} from './FirebaseProductServices';
@@ -40,7 +40,7 @@ export default function Bill(props) {
 
     window.localStorage.setItem("cartItems", JSON.stringify([]));
     // let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location} `;
-    let billUrl = `https://siddreactapp1.netlify.app/bills?id=${billId}`;
+    let billUrl = `https://siddreactapp1.netlify.app/?id=${billId}`;
     let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${billUrl}`;
     let encodedMessage = encodeURIComponent(message);
     setFlagLoader(false);
@@ -51,7 +51,7 @@ export default function Bill(props) {
   if (flagLoader) {
     return (
       <div className=" justify-content-center d-flex my-3">
-        <PacmanLoader size={24} color={"green"} className="text-center" />
+        <RingLoader size={50} color={"green"} className="text-center" />
       </div>
     );
   }
