@@ -12,7 +12,7 @@ async function importBackendDataToBill(id) {
   const bill = await getDoc(doc(db, "bills",id));
   if (bill.exists()) {
     console.log(bill.data());
-    return bill;
+    return bill.data();
   } else {
     return null;
   }
@@ -28,6 +28,7 @@ async function getLastBillNumberFromBackend() {
   });
   return lastnum[0];
 }
+// 
 // async function addBillToBackend(BillObj) {
 //   const billRef = await addDoc(collection(db, "bills"), BillObj.id);
 //   let list = [];

@@ -1,12 +1,10 @@
 import React from "react";
 
 export default function CartPageItems(props) {
-  let { view } = props;
-  let { product } = props;
+
   let { CartItems } = props;
   // let {cItems}=props
-  let { totalprice } = props;
-  let { productList } = props;
+  
   // let finalprice =
   // e.mrp - e.mrp * (e.discount / 100).toFixed(1);
   // let { key } = props;

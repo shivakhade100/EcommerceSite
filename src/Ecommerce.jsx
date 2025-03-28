@@ -8,7 +8,7 @@ import CartPageItems from "./CartPageItems";
 // import AdminProductForm from "./AdminProductForm";
 import AdminProductPage from "./AdminProductPage";
 import Bill from "./Bill";
-import {  RingLoader } from "react-spinners";
+import { RingLoader } from "react-spinners";
 // import { DotLottieReact } from "";
 
 import {
@@ -48,7 +48,7 @@ export default function Ecommerce() {
   // let [name, setName] = useState("");
   let [text, setText] = useState([]);
   let [flagLoader, setFlagLoader] = useState(false);
-  let [bills, setbill] = useState([]);
+  let [bill, setbill] = useState("");
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
 
@@ -97,26 +97,26 @@ export default function Ecommerce() {
       // handleBackendData();
     }
   }, []);
-    //code... get data from backend
-    // let storedUser = localStorage.getItem("user");
-    // let storedCart = localStorage.getItem("CartItems");
-    // let storedTotalPrice = localStorage.getItem("CartItems");
-    // let storedLoginStatus = localStorage.getItem("cartItems");
+  //code... get data from backend
+  // let storedUser = localStorage.getItem("user");
+  // let storedCart = localStorage.getItem("CartItems");
+  // let storedTotalPrice = localStorage.getItem("CartItems");
+  // let storedLoginStatus = localStorage.getItem("cartItems");
 
-    // if (storedUser) {
-    //   setUser(JSON.parse(storedUser));
-    //   setLoginStatus(storedLoginStatus || "no");
-    // }
+  // if (storedUser) {
+  //   setUser(JSON.parse(storedUser));
+  //   setLoginStatus(storedLoginStatus || "no");
+  // }
 
-    // if (storedCart) {
-    //   setCartItems(JSON.parse(storedCart));
-    //   setCnt(JSON.parse(storedCart).length);
-    // }
+  // if (storedCart) {
+  //   setCartItems(JSON.parse(storedCart));
+  //   setCnt(JSON.parse(storedCart).length);
+  // }
 
-    // if (storedTotalPrice) {
-    //   setTotalPrice(parseFloat(storedTotalPrice));
-    // }
- 
+  // if (storedTotalPrice) {
+  //   setTotalPrice(parseFloat(storedTotalPrice));
+  // }
+
   // async function handleBackendData() {
   //   setFlagLoader(true)
   //   let data = await importBackendDataToBill();
@@ -128,8 +128,8 @@ export default function Ecommerce() {
   async function getBill(billId) {
     setFlagLoader(true);
     let b = await importBackendDataToBill(billId);
-    // console.log("Here is the bill");
-    // console.log(b);
+    console.log("Here is the bill");
+    console.log(b);   
     if (b == null) {
       setbill(b);
       setFlagLoader(false);
@@ -412,7 +412,7 @@ export default function Ecommerce() {
       );
     }
     let updatedCart;
-    if (CartItems &&CartItems.length > 0) {
+    if (CartItems && CartItems.length > 0) {
       updatedCart = [...CartItems];
     } else {
       updatedCart = [];
@@ -420,7 +420,7 @@ export default function Ecommerce() {
     updatedCart.push(newProduct);
     setCartItems(updatedCart);
   }
- 
+
   //Handle "+"
   function handleIncrement(product) {
     let temp = [...productList];
@@ -443,8 +443,6 @@ export default function Ecommerce() {
     console.log(updatedCart);
   }
   //handlecart "+"
-
- 
 
   //Handle "-"
   function handleDecrement(product) {
@@ -480,7 +478,6 @@ export default function Ecommerce() {
     }
     console.log(updatedCart);
   }
-  
 
   //Sign_UP & Login Button Handle
   function handleFormButtonClick(view) {
@@ -736,7 +733,6 @@ export default function Ecommerce() {
             <Login
               user={user}
               view={view}
-              name={name}
               loginStatus={loginStatus}
               onClick={handleFormButtonClick}
               onLoginFormSubmit={handleLoginFormSubmit}
@@ -778,7 +774,7 @@ export default function Ecommerce() {
               // onChangeButtonClick={handleChangeButtonClick}
               totalprice={totalprice}
               user={user}
-              name={name}
+             
               CartItems={CartItems}
             />
           </div>
@@ -807,9 +803,7 @@ export default function Ecommerce() {
             />
           </div>
         )}
-        {view == "FinalBillPage" && (
-          <Billpage bills={bills}  />
-        )}
+        {view == "FinalBillPage" && <Billpage bill={bill} />}
       </div>
     </>
   );
