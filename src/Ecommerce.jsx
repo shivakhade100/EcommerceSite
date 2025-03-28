@@ -48,7 +48,7 @@ export default function Ecommerce() {
   // let [name, setName] = useState("");
   let [text, setText] = useState([]);
   let [flagLoader, setFlagLoader] = useState(false);
-  let [bill, setbill] = useState([]);
+  let [bills, setbill] = useState([]);
   const provider = new GoogleAuthProvider();
   const auth = getAuth();
 
@@ -96,6 +96,7 @@ export default function Ecommerce() {
       // setView("FinalBillPage")
       // handleBackendData();
     }
+  }, []);
     //code... get data from backend
     // let storedUser = localStorage.getItem("user");
     // let storedCart = localStorage.getItem("CartItems");
@@ -115,7 +116,7 @@ export default function Ecommerce() {
     // if (storedTotalPrice) {
     //   setTotalPrice(parseFloat(storedTotalPrice));
     // }
-  }, []);
+ 
   // async function handleBackendData() {
   //   setFlagLoader(true)
   //   let data = await importBackendDataToBill();
@@ -124,22 +125,22 @@ export default function Ecommerce() {
 
   //    billdata=data
   // }
-  async function getBill() {
+  async function getBill(billId) {
     setFlagLoader(true);
-    let b = await importBackendDataToBill();
-    console.log("Here is the bill");
-    console.log(b);
+    let b = await importBackendDataToBill(billId);
+    // console.log("Here is the bill");
+    // console.log(b);
     if (b == null) {
       setbill(b);
       setFlagLoader(false);
       setView("FinalBillPage");
       return;
     }
-    b.date = new Date(b.date.toDate());
+    // b.date = new Date(b.date.toDate());
     console.log("coming datas");
 
-    setbill(b);
     // setCartItems(b)
+    setbill(b);
     setView("FinalBillPage");
     // handleBackendData()
     setFlagLoader(false);
@@ -807,7 +808,7 @@ export default function Ecommerce() {
           </div>
         )}
         {view == "FinalBillPage" && (
-          <Billpage bill={bill} totalprice={totalprice} user={user} />
+          <Billpage bills={bills}  />
         )}
       </div>
     </>

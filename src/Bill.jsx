@@ -25,6 +25,7 @@ export default function Bill(props) {
     let b = await getLastBillNumberFromBackend();
     let currentBillNumber = b.lastbillnumber + 1;
     console.log(currentBillNumber);
+    2;
 
     let BillObj = {};
     BillObj.billNumber = currentBillNumber;
@@ -33,20 +34,24 @@ export default function Bill(props) {
     BillObj.amount = totalprice;
     BillObj.soldProducts = CartItems;
     BillObj = await addBillToBackend(BillObj);
+    // console.log(BillObj);
+
     b.lastbillnumber = currentBillNumber;
     await updateBackendLastBillNumber(b);
-    let billId = b.id;
-    // console.log(billId);
+    let billId = BillObj.id;
+    console.log(billId);
 
     window.localStorage.setItem("cartItems", JSON.stringify([]));
-     let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location}${billId} `;
+    let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${window.location}?id=${billId} `;
     // let billUrl = `https://siddreactapp1.netlify.app/?id=${billId}`;
     // let message = `I am ${user.name}.My Bill Number is ${currentBillNumber}.Its link is ${billUrl}`;
     // let encodedMessage = encodeURIComponent(message);
     setFlagLoader(false);
-    window.open(
+    console.log(message);
+    
+    window.location=
       `https://api.whatsapp.com/send?phone=918999181372&text=${message}`
-    );
+    
   }
   if (flagLoader) {
     return (
@@ -85,7 +90,7 @@ export default function Bill(props) {
             <div className=" mx-auto p-2 pb-1  pt-2 my-auto text-center  h5 ">
               || Shree ||
             </div>
-            <div className="h3 text-center  "> SKians Shoes </div>
+            <div className="h3 text-center   "> SKians Shoes </div>
             <div className="h5 text-center  ">
               220 , Matalwadi Phata ,Bhugaon- 412115
             </div>

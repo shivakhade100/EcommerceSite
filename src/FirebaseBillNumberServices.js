@@ -42,6 +42,8 @@ async function getLastBillNumberFromBackend() {
 async function addBillToBackend(BillObj) {
   const productRef = await addDoc(collection(db, "bills"), BillObj);
   console.log("Document written with ID: ", productRef.id);
+  BillObj.id = productRef.id;
+  return BillObj;
 }
 async function updateBackendLastBillNumber(b) {
   const BillRef = doc(db, "lastBillnumber", b.id);

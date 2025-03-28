@@ -2,12 +2,13 @@ import React from "react";
 // import { addBackendDataToBill } from "./FirebaseBillNumberServices";
 
 export default function Billpage(props) {
-  let {user}=props
-  // let { CartItems } = props;
-  let { totalprice } = props
-  let {data}=props;
-  let {bill}=props
+  // let {user}=props
+  // // let { CartItems } = props;
+  // let { totalprice } = props
+  // let {data}=props;
+  let {bills}=props
   const currentDate = new Date().toLocaleDateString();
+  // console.log(bill.data("soldProducts"))
   
 
   // async function name(params) {
@@ -28,16 +29,17 @@ export default function Billpage(props) {
               220 , Matalwadi Phata ,Bhugaon- 412115
             </div>
             <div className="text-end pe-3  h5">Date: {currentDate} </div>
-            <div className="h5 ps-5 ">Customer Name : {bill.customer}</div>
+            <div className="h5 ps-5 ">Customer Name : {bills.customer}</div>
             <div className="row ">
               <div className="col-4 h5  ">Product</div>
               <div className="col-3 h5  text-start ps-0 ">Rate</div>
               <div className="col-3  h5 text-center   ">Quantity</div>
               <div className="col-2  h5 ">Total</div>
             </div>
-            {bill.soldProducts.map((e, index) => {
-              return (
-                <div className="row "key={e.id}>
+
+            {bills.soldProducts.map((e, index) => {
+            
+                <div className="row ">
                   <div className="col-4 text-start h6 ps-3">{`${index + 1}) ${
                     e.name
                   }`}</div>
@@ -48,7 +50,7 @@ export default function Billpage(props) {
                         {e.mrp}{" "}
                       </span>{" "}
                       <span className="h5">
-                        {e.mrp - e.mrp * (e.discount / 100).toFixed(2)}
+                        {e.mrp - e.mrp * (e.discount / 100)}
                       </span>
                     </div>
                   </div>
@@ -56,15 +58,15 @@ export default function Billpage(props) {
                     {e.qty} {e.unit}
                   </div>
                   <div className="col-2 h5">
-                    {e.mrp - e.mrp * (e.discount / 100).toFixed(2)}
+                    {e.mrp - e.mrp * (e.discount / 100)}
                   </div>
                 </div>
-              );
+              
             })}
             <div className="row  my-1">
               <div className="col-9  text-end  col-lg-9 h5">Grand Total : </div>
               <div className="col-3 col-lg- text-start  ps-0 h5">
-                Rs. {bill.amount.toFixed(2)}{" "}
+                Rs. {bills.amount}{" "}
               </div>
             </div>
           </div>

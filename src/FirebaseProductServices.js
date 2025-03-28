@@ -43,9 +43,12 @@ async function updateBackendProduct(p) {
 async function deleteBackendProduct(product) {
   await deleteDoc(doc(db, "products", product.id));
 }
-async function addProductToBackend(s) {
-  const productRef = await addDoc(collection(db, "products"),s);
+
+async function addProductToBackend(product) {
+  const productRef = await addDoc(collection(db, "products"),product);
   console.log("Document written with ID: ", productRef.id);
+  product.id = productRef.id;
+  return product;
 }
 
 export {
