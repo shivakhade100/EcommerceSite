@@ -72,7 +72,7 @@ export default function AdminProductPage(props) {
     <>
       
       {adminView == "list" && (
-        <div className=" text-center      p-1 p-lg-2   mt-4 mt-lg-0  text-black  ">
+        <div className=" text-center    row   p-1 p-lg-2   mt-4 mt-lg-0  text-black  ">
           <a href="#" className="h5" onClick={handleLIstFormClick}>
             {" "}
             Add the new product

@@ -76,7 +76,7 @@ export default function Bill(props) {
 
   return (
     <>
-      <div className="my-5 p-5"></div>
+      <div className="my-4 p-5"></div>
 
       <div className=" col-12    col-lg-12   text-center">
         <button className="btn log" onClick={handleBillCreateClick}>

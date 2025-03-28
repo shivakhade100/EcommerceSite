@@ -33,7 +33,7 @@ export default function NavBar(props) {
     props.onLogoutClick();
   }
   function handleChangeKeyUp(event) {
-    event.preventDefault()
+    // event.preventDefault()
     props.onChangeKeyUp(event);
   }
   function handleLoginButtonClickUsingGoogle() {

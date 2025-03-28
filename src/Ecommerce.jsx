@@ -408,7 +408,7 @@ export default function Ecommerce() {
       setCartItems([...CartItems, newProduct]);
       setTotalPrice(
         // totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(1)
-        totalprice + product.mrp * (1 - product.discount / 100).toFixed(0)
+        totalprice + product.mrp * (1 - product.discount / 100).toFixed(2)
       );
     }
     let updatedCart;
@@ -438,7 +438,7 @@ export default function Ecommerce() {
 
     setTotalPrice(
       // totalprice + product.mrp * (1 - product.discount / 100).toFixed(1)
-      totalprice + product.mrp * (1 - product.discount / 100).toFixed(0)
+      totalprice + product.mrp * (1 - product.discount / 100).toFixed(2)
     );
     console.log(updatedCart);
   }
@@ -473,7 +473,7 @@ export default function Ecommerce() {
     } else {
       setTotalPrice(
         // totalprice - product.mrp * (1 - product.discount / 100).toFixed(1)
-        totalprice - product.mrp * (1 - product.discount / 100).toFixed(0)
+        totalprice - product.mrp * (1 - product.discount / 100).toFixed(2)
       );
     }
     console.log(updatedCart);
@@ -481,8 +481,13 @@ export default function Ecommerce() {
 
   //Sign_UP & Login Button Handle
   function handleFormButtonClick(view) {
+    
     console.log(view);
     setView(view);
+    // setCnt("")
+    // setTotalPrice("")
+    // setCartItems("")
+
   }
 
   //handle logout button clicked
@@ -803,7 +808,7 @@ export default function Ecommerce() {
             />
           </div>
         )}
-        {view == "FinalBillPage" && <Billpage bill={bill} />}
+        <div className="productbg">{view == "FinalBillPage" && <Billpage bill={bill} />}</div>
       </div>
     </>
   );

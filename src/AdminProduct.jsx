@@ -44,14 +44,14 @@ export default function AdminProduct(props) {
           {product.name}{" "}
           {/* {product.discount > 0 ? ` -(${product.discount}%)` : " "} */}
         </div>
-        {product.discount == 0 && <h5> Rs {product.mrp}</h5>}
+        {product.discount === 0 && <h5> Rs {product.mrp}</h5>}
         {product.discount != 0 && (
           <h6>
             Rs{" "}
             <span className=" text-decoration-line-through clr">
               {product.mrp}
             </span>{" "}
-            {product.mrp - product.mrp * (product.discount / 100).toFixed(1)}
+            {product.mrp - product.mrp * (product.discount / 100).toFixed(2)}
           </h6>
         )}
         <div className="row  ">
