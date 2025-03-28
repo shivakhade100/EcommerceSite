@@ -4,8 +4,8 @@ export default function Product(props) {
   let { product } = props;
   let { index } = props;
   let finalprice =
-    // product.mrp - product.mrp * (product.discount / 100).toFixed(1);
-    product.mrp - product.discount * 0.01 * product.mrp;
+     product.mrp - product.mrp * (product.discount / 100).toFixed(0);
+    // finalprice - product.mrp * (1 - product.discount / 100);
   let displayprice = product.qty * finalprice;
   // console.log(product.name);
   function handleAddToCart() {
@@ -75,7 +75,7 @@ export default function Product(props) {
           <div className=" col-6    text-center  col-lg-6     clr h7 ">
             <div className=" col-lg-12  col-12 ">qty: {product.qty} </div>
             <div className=" col-lg-12 col-12">
-              {product.qty != 0 ? `Rs:${displayprice.toFixed(2)}` : " "}
+              {product.qty != 0 ? `Rs:${displayprice.toFixed(0)}` : " "}
             </div>
             {/* <div className="col-1 col-lg-5  clr "></div> */}
           </div>

@@ -115,7 +115,7 @@ export default function Bill(props) {
                         {e.mrp}{" "}
                       </span>{" "}
                       <span className="h5">
-                        {e.mrp - e.mrp * (e.discount / 100).toFixed(2)}
+                        {e.mrp - e.mrp * (e.discount / 100).toFixed(0)}
                       </span>
                     </div>
                   </div>
@@ -123,7 +123,7 @@ export default function Bill(props) {
                     {e.qty} {e.unit}
                   </div>
                   <div className="col-2 h5">
-                    {e.mrp - e.mrp * (e.discount / 100).toFixed(2)}
+                    {e.mrp - e.mrp * (e.discount / 100).toFixed(0)}
                   </div>
                 </div>
               );
@@ -131,7 +131,7 @@ export default function Bill(props) {
             <div className="row  my-1">
               <div className="col-9  text-end  col-lg-9 h5">Grand Total : </div>
               <div className="col-3 col-lg- text-start  ps-0 h5">
-                Rs. {totalprice.toFixed(2)}{" "}
+                Rs. {totalprice.toFixed(0)}{" "}
               </div>
             </div>
           </div>
