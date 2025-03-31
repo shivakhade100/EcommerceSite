@@ -45,10 +45,10 @@ export default function Billpage(props) {
             <div className="text-end pe-3  h5">Date: {currentDate} </div>
             <div className="h5 ps-5 ">Customer Name : {bill.customer}</div>
             <div className="row ">
-              <div className="col-4 h5  ">Product</div>
-              <div className="col-3 h5  text-start ps-0 ">Rate</div>
-              <div className="col-3  h5 text-center   ">Quantity</div>
-              <div className="col-2  h5 ">Total</div>
+              <div className="col-3   col-lg-3 text-start ps-0 h6">Product</div>
+              <div className="col-2  col-lg-3 h6  text-start ps-0">Rate</div>
+              <div className="col-3 col-lg-3 text-start   h6 text-center  ps-0    ">Quantity</div>
+              <div className="col-3 col-lg-3 text-start  ps-lg-5  h6 ">Total</div>
             </div>
 
             {bill.soldProducts.map((e, index) => {
@@ -57,25 +57,25 @@ export default function Billpage(props) {
               return (
                 
                 <div className="row " key={index}>
-                  <div className="col-4 text-start h6 ps-3">{`${index + 1}) ${
+                  <div className="col-2  col-lg-3  text-start h6">{`${index + 1}) ${
                     e.name
                   }`}</div>
-                  <div className="col-4 text-start ps-0">
-                    <div className="">
+                  <div className="col-4  ps-lg-0 col-lg-3 text-start ">
+                    <div className="h6">
                       Rs.{" "}
-                      <span className="text-decoration-line-through h5 ">
+                      <span className="text-decoration-line-through h6 ">
                         {e.mrp}{" "}
                       </span>{" "}
-                      <span className="h5">
+                      <span className="h6">
                         {/* {e.mrp - e.mrp * (e.discount / 100).toFixed(0)} */}
                         {formatCurrency(discountedPrice)}
                       </span>
                     </div>
                   </div>
-                  <div className="col-2 h5  ps-0  ">
+                  <div className="col-2  col-lg-3 ps-lg-5 mx-lg-4  text-start h6  ps-0 ">
                     {e.qty} 
                   </div>
-                  <div className="col-2 h5">
+                  <div className="col-4  col-lg-2 ps-lg-0 text-start h6">
                     {/* {e.mrp - e.mrp * (e.discount / 100)} */}
                     Rs{formatCurrency(totalPrice)}
                   </div>
