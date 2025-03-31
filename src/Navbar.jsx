@@ -11,7 +11,7 @@ export default function NavBar(props) {
   let { user } = props;
   let { name } = props;
   let { loginStatus } = props;
-  let [btnview, setBtnView] = useState("");
+  // let [btnview, setBtnView] = useState("");
   // const provider = new GoogleAuthProvider();
   //   const auth = getAuth();
 

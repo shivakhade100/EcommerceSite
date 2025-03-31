@@ -407,3 +407,41 @@ border-style: double;
   border-bottom:1px solid rgba(255,255,255,.5);
   transition: all 500ms cubic-bezier(0, 0.110, 0.35, 2);
 }
+.dashed {
+  --b: 5px;  /* border thickness */
+  --s: 30px; /* size of the dashes */
+  --c1: #215A6D;
+  --c2: #92C7A3;
+  
+  
+  
+  aspect-ratio: 1;
+  position: relative;
+}
+.dashed::before {
+  content:"";
+  position: absolute;
+  inset: 0;
+  padding: var(--b);
+  background: 
+    repeating-conic-gradient(var(--c1) 0 25%,var(--c2) 0 50%) 
+    0 0/var(--s) var(--s) round;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  justify-content: center;
+}
+.dashed {
+  margin: 0;
+
+  width: auto;
+  place-content: center;
+  
+}
+.side{
+  border: 1px solid black;
+  margin: 0px;
+}

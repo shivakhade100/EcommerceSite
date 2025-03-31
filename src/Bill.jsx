@@ -18,6 +18,15 @@ export default function Bill(props) {
   // let [price,setPrice]=useState("")
   // const phonenumber = `8999181372`;
 
+  const formatCurrency = (amount) => {
+    return amount.toLocaleString('en-IN', {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2
+    });
+  };
+  const calculateDiscountedPrice = (mrp, discount) => {
+    return mrp * (1 - discount / 100);
+  };
   let [flagLoader, setFlagLoader] = useState(false);
   const currentDate = new Date().toLocaleDateString();
   async function handleBillCreateClick() {
@@ -25,7 +34,6 @@ export default function Bill(props) {
     let b = await getLastBillNumberFromBackend();
     let currentBillNumber = b.lastbillnumber + 1;
     console.log(currentBillNumber);
-    2;
 
     let BillObj = {};
     BillObj.billNumber = currentBillNumber;
@@ -48,10 +56,8 @@ export default function Bill(props) {
     // let encodedMessage = encodeURIComponent(message);
     setFlagLoader(false);
     console.log(message);
-    
-    window.location=
-      `https://api.whatsapp.com/send?phone=918999181372&text=${message}`
-    
+
+    window.location = `https://api.whatsapp.com/send?phone=918999181372&text=${message}`;
   }
   if (flagLoader) {
     return (
@@ -84,7 +90,7 @@ export default function Bill(props) {
         </button>
       </div>
 
-      <div className="row">
+      <div className="row p-4">
         <div className="  col-12 d-flex justify-content-center   ">
           <div className="mybb  col-lg-6   opacity-75   ">
             <div className=" mx-auto p-2 pb-1  pt-2 my-auto text-center  h5 ">
@@ -96,42 +102,48 @@ export default function Bill(props) {
             </div>
             <div className="text-end pe-3  h5">Date: {currentDate} </div>
             <div className="h5 ps-5 ">Customer Name : {user.name}</div>
-            <div className="row ">
-              <div className="col-4 h5  ">Product</div>
-              <div className="col-3 h5  text-start ps-0 ">Rate</div>
-              <div className="col-3  h5 text-center   ">Quantity</div>
-              <div className="col-2  h5 ">Total</div>
+            <div className="row   side ">
+              <div className="col-3   col-lg-3 text-start ps-0 h6  ">Product</div>
+              <div className="col-2  col-lg-3 h6  text-start ps-0 ">Rate</div>
+              <div className="col-3 col-lg-3 text-start   h6 text-center  ps-0    ">Quantity</div>
+              <div className="col-3 col-lg-3 text-start  ps-lg-5  h6 ">Total</div>
             </div>
             {CartItems.map((e, index) => {
+               const discountedPrice = calculateDiscountedPrice(e.mrp, e.discount);
+               const totalPrice = discountedPrice * e.qty;
               return (
                 <div className="row  " key={e.id}>
-                  <div className="col-4 text-start h6 ps-3">{`${index + 1}) ${
+                  <div className="col-2  col-lg-3  text-start h6 ">{`${index + 1}) ${
                     e.name
                   }`}</div>
-                  <div className="col-4 text-start ps-0">
-                    <div className="">
+                  <div className="col-4  ps-lg-0 col-lg-3 text-start ">
+                    <div className="h6 ">
                       Rs.{" "}
-                      <span className="text-decoration-line-through h5 ">
-                        {e.mrp}{" "}
+                      <span className="text-decoration-line-through   h6 ">
+                        {/* {e.mrp}{" "} */}
+                        {formatCurrency(e.mrp)}
                       </span>{" "}
-                      <span className="h5">
-                        {e.mrp - e.mrp * (e.discount / 100).toFixed(0)}
+                      <span className="h6">
+                        {/* {e.mrp - e.mrp * (e.discount / 100).toFixed(0)} */}
+                        {formatCurrency(discountedPrice)}
                       </span>
                     </div>
                   </div>
-                  <div className="col-2 h5  ps-0  ">
-                    {e.qty} {e.unit}
+                  <div className="col-2  col-lg-3 ps-lg-5 mx-lg-4  text-start h6  ps-0  ">
+                    {e.qty} 
                   </div>
-                  <div className="col-2 h5">
-                    {e.mrp - e.mrp * (e.discount / 100).toFixed(0)}
+                  <div className="col-4  col-lg-2 ps-lg-0 text-start h6">
+                    {/* {e.mrp - e.mrp * (e.discount / 100).toFixed(0)} */}
+                    Rs{formatCurrency(totalPrice)}
                   </div>
                 </div>
               );
             })}
             <div className="row  my-1">
               <div className="col-9  text-end  col-lg-9 h5">Grand Total : </div>
-              <div className="col-3 col-lg- text-start  ps-0 h5">
-                Rs. {totalprice.toFixed(0)}{" "}
+              <div className="col-3 col-lg- text-start  ps-0 align-items-center  my-1 h6">
+                {/* Rs. {totalprice.toFixed(0)}{" "} */}
+              Rs{formatCurrency(totalprice)}
               </div>
             </div>
           </div>

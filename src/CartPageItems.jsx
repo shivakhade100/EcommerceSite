@@ -66,7 +66,7 @@ export default function CartPageItems(props) {
                       })  ${product.name}`}</div>
                       <div className="col-6 col-lg-12 text-black  text-end  pe-5">
                         {product.discount == 0 && (
-                          <h4>Rs. {(product.mrp * product.qty).toFixed(1)}</h4>
+                          <h4>Rs. {(product.mrp * product.qty).toFixed(2)}</h4>
                         )}
                         {product.discount != 0 && (
                           <h4>
@@ -77,7 +77,7 @@ export default function CartPageItems(props) {
                             <span className=" text-black">
                               {((product.mrp -
                                 product.discount * 0.01 * product.mrp) *
-                                product.qty).toFixed(0)}
+                                product.qty).toFixed(2)}
                             </span>
                           </h4>
                         )}

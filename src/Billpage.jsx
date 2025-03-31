@@ -5,6 +5,16 @@ import { data } from "react-router-dom";
 export default function Billpage(props) {
   let { bill } = props;
   const currentDate = new Date().toLocaleDateString();
+  const formatCurrency = (amount) => {
+    return amount.toLocaleString('en-IN', {
+      maximumFractionDigits: 2,
+      minimumFractionDigits: 2
+    });
+  };
+  const getDiscountedPrice = (mrp, discount) => {
+    return mrp - (mrp * discount / 100);
+  };
+
 
   // if (flagLoader) {
   //   return (
@@ -42,7 +52,10 @@ export default function Billpage(props) {
             </div>
 
             {bill.soldProducts.map((e, index) => {
+              const discountedPrice = getDiscountedPrice(e.mrp, e.discount);
+              const totalPrice = discountedPrice * e.qty;
               return (
+                
                 <div className="row " key={index}>
                   <div className="col-4 text-start h6 ps-3">{`${index + 1}) ${
                     e.name
@@ -54,15 +67,17 @@ export default function Billpage(props) {
                         {e.mrp}{" "}
                       </span>{" "}
                       <span className="h5">
-                        {e.mrp - e.mrp * (e.discount / 100).toFixed(0)}
+                        {/* {e.mrp - e.mrp * (e.discount / 100).toFixed(0)} */}
+                        {formatCurrency(discountedPrice)}
                       </span>
                     </div>
                   </div>
                   <div className="col-2 h5  ps-0  ">
-                    {e.qty} {e.unit}
+                    {e.qty} 
                   </div>
                   <div className="col-2 h5">
-                    {e.mrp - e.mrp * (e.discount / 100)}
+                    {/* {e.mrp - e.mrp * (e.discount / 100)} */}
+                    Rs{formatCurrency(totalPrice)}
                   </div>
                 </div>
               );
@@ -70,7 +85,11 @@ export default function Billpage(props) {
             <div className="row  my-1">
               <div className="col-9  text-end  col-lg-9 h5">Grand Total : </div>
               <div className="col-3 col-lg- text-start  ps-0 h5">
-                Rs. {bill.amount.toFixed(0)}{" "}
+                {/* Rs. {bill.amount.toFixed(0)}{" "} */}
+                Rs{bill.amount.toLocaleString('en-IN', {
+                  maximumFractionDigits: 2,
+                  minimumFractionDigits: 2
+                })}
               </div>
             </div>
           </div>

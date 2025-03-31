@@ -22,8 +22,7 @@ import {
   getProductsFromBackend,
 } from "./FirebaseProductServices";
 import { addUserToBackend, getUserFromBackend } from "./FirebaseUserServices";
-import Logout from "./Logout";
-import { LottiePlayer } from "lottie-react";
+
 import Billpage from "./Billpage";
 import { importBackendDataToBill } from "./FirebaseBillNumberServices";
 
@@ -78,8 +77,8 @@ export default function Ecommerce() {
     if (window.location.search == "") {
       getDataFromServer();
     } else {
-      let params = new URLSearchParams(window.location.search);
-      let billId = params.get("id");
+      let param = new URLSearchParams(window.location.search);
+      let billId = param.get("id");
       if (billId == null) {
         // invali link
         setbill(null);
@@ -129,7 +128,7 @@ export default function Ecommerce() {
     setFlagLoader(true);
     let b = await importBackendDataToBill(billId);
     console.log("Here is the bill");
-    console.log(b);   
+    console.log(b);
     if (b == null) {
       setbill(b);
       setFlagLoader(false);
@@ -406,6 +405,14 @@ export default function Ecommerce() {
       setProductList([...temp]);
 
       setCartItems([...CartItems, newProduct]);
+
+      // totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(1)
+      // totalprice + product.mrp * (1 - product.discount / 100).toFixed(2)
+      // totalprice =
+      //   totalprice + product.mrp - product.mrp * (product.discount / 100);
+
+      // totalprice = parseFloat(totalprice.toFixed(2));
+      // setTotalPrice(totalprice);
       setTotalPrice(
         // totalprice + newProduct.mrp * (1 - newProduct.discount / 100).toFixed(1)
         totalprice + product.mrp * (1 - product.discount / 100).toFixed(2)
@@ -437,15 +444,23 @@ export default function Ecommerce() {
     setCartItems(updatedCart);
 
     setTotalPrice(
-      // totalprice + product.mrp * (1 - product.discount / 100).toFixed(1)
-      totalprice + product.mrp * (1 - product.discount / 100).toFixed(2)
-    );
+       totalprice + product.mrp * (1 - product.discount / 100).toFixed(2)
+    )
+    // const discountedPrice = product.mrp * (1 - product.discount / 100);
+    // const newTotal = totalprice + discountedPrice;
+    // setTotalPrice(parseFloat(newTotal.toFixed(2)));
+    // totalprice=totalprice + product.mrp * (1 - product.discount / 100)
+    // totalprice=parseFloat(totalprice.toFixed(2))
+    // setTotalPrice(totalprice)
+
     console.log(updatedCart);
   }
   //handlecart "+"
 
   //Handle "-"
   function handleDecrement(product) {
+    // Calculate discounted price
+
     let temp = [...productList];
     let index = temp.indexOf(product);
     let newProduct = { ...temp[index] };
@@ -472,22 +487,27 @@ export default function Ecommerce() {
       setTotalPrice(0);
     } else {
       setTotalPrice(
-        // totalprice - product.mrp * (1 - product.discount / 100).toFixed(1)
         totalprice - product.mrp * (1 - product.discount / 100).toFixed(2)
       );
+      // totalprice=totalprice - product.mrp * (1 - product.discount / 100)
+      // totalprice=parseFloat(totalprice.toFixed(2))
+      // setTotalPrice(totalprice)
+      //         const discountFactor = 1 - product.discount / 100;
+      // const priceReduction = product.mrp * discountFactor;
+      // const newTotal = totalprice - priceReduction;
+
+      // setTotalPrice(Math.round(newTotal * 100) / 100);
     }
     console.log(updatedCart);
   }
 
   //Sign_UP & Login Button Handle
   function handleFormButtonClick(view) {
-    
     console.log(view);
     setView(view);
     // setCnt("")
     // setTotalPrice("")
     // setCartItems("")
-
   }
 
   //handle logout button clicked
@@ -707,13 +727,10 @@ export default function Ecommerce() {
           totalprice={totalprice}
           CartItems={CartItems}
           user={user}
-          // name={name}
           loginStatus={loginStatus}
           view={view}
           onFormButtonClick={handleFormButtonClick}
           onButtonLogout={handleButtonLogout}
-          // onCartButtonClick={handleCartButtonClick}
-          // onLogoutClick={handleLogoutClick}
           onCartItems={handleCartItems}
           onChangeKeyUp={handleChangeKeyUp}
           onLoginButtonClickUsingGoogle={handleLoginButtonClickUsingGoogle}
@@ -732,83 +749,80 @@ export default function Ecommerce() {
             ></ProductPage>
           </div>
         )}
-        {/* {view == "logout" && <Logout message={message} />} */}
-        {view == "Login" && (
-          <div className=" text-white productbg">
-            <Login
-              user={user}
-              view={view}
-              loginStatus={loginStatus}
-              onClick={handleFormButtonClick}
-              onLoginFormSubmit={handleLoginFormSubmit}
-              onLoginClick={handleLoginClick}
-            />
+      </div>
+
+      {view == "Login" && (
+        <div className=" text-white productbg">
+          <Login
+            user={user}
+            view={view}
+            loginStatus={loginStatus}
+            onClick={handleFormButtonClick}
+            onLoginFormSubmit={handleLoginFormSubmit}
+            onLoginClick={handleLoginClick}
+          />
+        </div>
+      )}
+      {view == "SignUp" && (
+        <div className="productbg">
+          <SignUpPage
+            view={view}
+            signupstatus={signupstatus}
+            onFormButtonClick={handleFormButtonClick}
+            onSignUpFormSubmit={handleSignUpFormSubmit}
+            onLoginClick={handleLoginClick}
+          />
+        </div>
+      )}
+      {view == "cart" && (
+        <div className="productbg vh-100  v">
+          <CartPageItems
+            CartItems={CartItems}
+            totalprice={totalprice}
+            onIncrement={handleIncrement}
+            onDecrement={handleDecrement}
+            // onChangeButtonClick={handleChangeButtonClick}
+            onBackButtonClick={handleBackButtonClick}
+            onBuyButtonClick={handleBuyButtonClick}
+          />
+        </div>
+      )}
+      {view == "bill" && (
+        <div className="  vh-100    text-black  productbg">
+          <Bill
+            // onChangeButtonClick={handleChangeButtonClick}
+            totalprice={totalprice}
+            user={user}
+            CartItems={CartItems}
+          />
+        </div>
+      )}
+      {view == "noelement" && (
+        <div className="my-4 p-5 vh-100  productbg col-lg-12 col-sm-12 col-md-6">
+          <div className=" p-3    text-black text-center my-5 h4 ">
+            Cart is Empty.{" "}
+            <a href="#" onClick={handleStartButtonClick}>
+              Start
+            </a>{" "}
+            Shopping.
           </div>
-        )}
-        {view == "SignUp" && (
-          <div className="productbg">
-            <SignUpPage
-              view={view}
-              signupstatus={signupstatus}
-              onFormButtonClick={handleFormButtonClick}
-              onSignUpFormSubmit={handleSignUpFormSubmit}
-              onLoginClick={handleLoginClick}
-              // users={user}
-              // onChange={checkUser}
-            />
-          </div>
-        )}
-        {view == "cart" && (
-          <div className="productbg vh-100  v">
-            <CartPageItems
-              CartItems={CartItems}
-              totalprice={totalprice}
-              // cItems={cItems}
-              // product={product}
-              onIncrement={handleIncrement}
-              onDecrement={handleDecrement}
-              // onChangeButtonClick={handleChangeButtonClick}
-              onBackButtonClick={handleBackButtonClick}
-              onBuyButtonClick={handleBuyButtonClick}
-            />
-          </div>
-        )}
-        {view == "bill" && (
-          <div className="  vh-100    text-black  productbg">
-            <Bill
-              // onChangeButtonClick={handleChangeButtonClick}
-              totalprice={totalprice}
-              user={user}
-             
-              CartItems={CartItems}
-            />
-          </div>
-        )}
-        {view == "noelement" && (
-          <div className="my-4 p-5 vh-100  productbg col-lg-12 col-sm-12 col-md-6">
-            <div className=" p-3    text-black text-center my-5 h4 ">
-              Cart is Empty.{" "}
-              <a href="#" onClick={handleStartButtonClick}>
-                Start
-              </a>{" "}
-              Shopping.
-            </div>
-          </div>
-        )}
-        {/* {view == "admin" && <AdminProductForm adminView={adminView} />} */}
-        {view == "admin" && (
-          <div className=" col-lg-12 col-sm-12  productbg col-md-6">
-            <AdminProductPage
-              productList={productList}
-              view={view}
-              onDeleteCartAdmin={handleDeleteCartAdmin}
-              onProductEditFormSubmit={handleProductAddEditFormSubmit}
-              onProductAddFormSubmit={handleProductAddEditFormSubmit}
-              // onProductListClick={handleProductListClick}
-            />
-          </div>
-        )}
-        <div className="productbg">{view == "FinalBillPage" && <Billpage bill={bill} />}</div>
+        </div>
+      )}
+      {/* {view == "admin" && <AdminProductForm adminView={adminView} />} */}
+      {view == "admin" && (
+        <div className=" col-lg-12   col-sm-12  productbg col-md-6">
+          <AdminProductPage
+            productList={productList}
+            view={view}
+            onDeleteCartAdmin={handleDeleteCartAdmin}
+            onProductEditFormSubmit={handleProductAddEditFormSubmit}
+            onProductAddFormSubmit={handleProductAddEditFormSubmit}
+            // onProductListClick={handleProductListClick}
+          />
+        </div>
+      )}
+      <div className="productbg">
+        {view == "FinalBillPage" && <Billpage bill={bill} />}
       </div>
     </>
   );
