@@ -44,7 +44,7 @@ export default function Billpage(props) {
             <div className="text-end pe-3  h5">Date: {currentDate} </div>
             <div className="h5 ps-5 ">Customer Name : {bill.customer}</div>
             <div className="row ">
-              <div className="col-3   col-lg-3 text-start ps-0 h6">Product</div>
+              <div className="col-3   col-lg-3 text-start h6">Product</div>
               <div className="col-2  col-lg-3 h6  text-start ps-0">Rate</div>
               <div className="col-3 col-lg-3 text-start   h6 text-center  ps-0    ">
                 Quantity
