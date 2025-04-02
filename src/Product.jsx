@@ -7,7 +7,7 @@ export default function Product(props) {
      product.mrp - product.mrp * (product.discount / 100);
      finalprice = parseFloat(finalprice.toFixed(2)); 
     // finalprice - product.mrp * (1 - product.discount / 100);
-  let displayprice = product.qty * finalprice;
+  let displayprice =parseFloat( (product.qty * finalprice).toFixed(2));
   // console.log(product.name);
   function handleAddToCart() {
     props.onAddToCart(product);

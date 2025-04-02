@@ -429,52 +429,142 @@ export default function Ecommerce() {
   }
 
   //Handle "+"
+  // function handleIncrement(product) {
+  //   let temp = [...productList];
+  //   let index = temp.indexOf(product);
+  //   let newProduct = { ...temp[index] };
+  //   newProduct.qty++;
+  //   temp[index] = newProduct;
+  //   setProductList([...temp]);
+
+  //   //Update Cart Items and total price
+  //   let updatedCart = CartItems.map((item) =>
+  //     item.id === product.id ? { ...item, qty: item.qty + 1 } : item
+  //   );
+  //   setCartItems(updatedCart);
+
+  //   setTotalPrice(
+  //     totalprice + product.mrp * (1 - product.discount / 100).toFixed(2)
+  //   );
+  //   // const discountedPrice = product.mrp * (1 - product.discount / 100);
+  //   // const newTotal = totalprice + discountedPrice;
+  //   // setTotalPrice(parseFloat(newTotal.toFixed(2)));
+  //   // totalprice=totalprice + product.mrp * (1 - product.discount / 100)
+  //   // totalprice=parseFloat(totalprice.toFixed(2))
+  //   // setTotalPrice(totalprice)
+
+  //   console.log(updatedCart);
+  // }
   function handleIncrement(product) {
-    let temp = [...productList];
-    let index = temp.indexOf(product);
-    let newProduct = { ...temp[index] };
-    newProduct.qty++;
-    temp[index] = newProduct;
-    setProductList([...temp]);
-
-    //Update Cart Items and total price
-    let updatedCart = CartItems.map((item) =>
-      item.id === product.id ? { ...item, qty: item.qty + 1 } : item
+    // Create a copy of the product list to avoid direct state mutation
+    const updatedProductList = productList.map(item => 
+      item.id === product.id 
+        ? { ...item, qty: item.qty + 1 }
+        : item
     );
+    
+    setProductList(updatedProductList);
+  
+    // Update cart items
+    let productInCart = CartItems.some(item => item.id === product.id);
+    let updatedCart;
+  
+    if (productInCart) {
+      // If product exists in cart, increment quantity
+      updatedCart = CartItems.map(item =>
+        item.id === product.id ? { ...item, qty: item.qty + 1 } : item
+      );
+    } else {
+      // If product not in cart, add it with quantity 1
+      updatedCart = [...CartItems, { ...product, qty: 1 }];
+      setCnt(prevCnt => prevCnt + 1); // Increment cart count for new item
+    }
+  
     setCartItems(updatedCart);
-
-    setTotalPrice(
-       totalprice + product.mrp * (1 - product.discount / 100).toFixed(2)
-    )
-    // const discountedPrice = product.mrp * (1 - product.discount / 100);
-    // const newTotal = totalprice + discountedPrice;
-    // setTotalPrice(parseFloat(newTotal.toFixed(2)));
-    // totalprice=totalprice + product.mrp * (1 - product.discount / 100)
-    // totalprice=parseFloat(totalprice.toFixed(2))
-    // setTotalPrice(totalprice)
-
-    console.log(updatedCart);
+  
+    // Calculate price addition
+    const discountFactor = 1 - product.discount / 100;
+    const priceAddition = product.mrp * discountFactor;
+  
+    // Update total price using functional update
+    setTotalPrice(totalprice => {
+      const newTotal = totalprice + priceAddition;
+      return parseFloat(newTotal.toFixed(2)); // Ensure proper rounding
+    });
   }
+
   //handlecart "+"
 
   //Handle "-"
+  // function handleDecrement(product) {
+  //   // Calculate discounted price
+
+  //   let temp = [...productList];
+  //   let index = temp.indexOf(product);
+  //   let newProduct = { ...temp[index] };
+  //   newProduct.qty--;
+  //   temp[index] = newProduct;
+  //   setProductList([...temp]);
+
+  //   let updatedCart;
+  //   console.log(updatedCart);
+
+  //   if (newProduct.qty === 0) {
+  //     setCnt(cnt - 1); // Reduce cart count
+  //     updatedCart = CartItems.filter((item) => item.id !== product.id); // Remove item from cart
+  //   } else {
+  //     updatedCart = CartItems.map((item) =>
+  //       item.id === product.id ? { ...item, qty: item.qty - 1 } : item
+  //     );
+  //   }
+
+  //   setCartItems(updatedCart);
+
+  //   // If cart is empty, reset total price to 0
+  //   if (updatedCart.length === 0) {
+  //     setTotalPrice(0);
+  //   } else {
+  //     setTotalPrice(
+  //       totalprice - product.mrp * (1 - product.discount / 100).toFixed(2)
+  //     );
+  //     // totalprice=totalprice - product.mrp * (1 - product.discount / 100)
+  //     // totalprice=parseFloat(totalprice.toFixed(2))
+  //     // setTotalPrice(totalprice)
+  //     //         const discountFactor = 1 - product.discount / 100;
+  //     // const priceReduction = product.mrp * discountFactor;
+  //     // const newTotal = totalprice - priceReduction;
+
+  //     // setTotalPrice(Math.round(newTotal * 100) / 100);
+  //   }
+  //   console.log(updatedCart);
+  // }
   function handleDecrement(product) {
-    // Calculate discounted price
+    // Create a copy of the product list to avoid direct state mutation
+    const updatedProductList = [...productList];
+    const productIndex = updatedProductList.findIndex(
+      (item) => item.id === product.id
+    );
 
-    let temp = [...productList];
-    let index = temp.indexOf(product);
-    let newProduct = { ...temp[index] };
-    newProduct.qty--;
-    temp[index] = newProduct;
-    setProductList([...temp]);
+    if (productIndex === -1) return; // Product not found
 
+    // Create a new product object with updated quantity
+    const updatedProduct = {
+      ...updatedProductList[productIndex],
+      qty: updatedProductList[productIndex].qty - 1,
+    };
+
+    // Update the product in the list
+    updatedProductList[productIndex] = updatedProduct;
+    setProductList(updatedProductList);
+
+    // Update the cart items
     let updatedCart;
-    console.log(updatedCart);
-
-    if (newProduct.qty === 0) {
-      setCnt(cnt - 1); // Reduce cart count
-      updatedCart = CartItems.filter((item) => item.id !== product.id); // Remove item from cart
+    if (updatedProduct.qty === 0) {
+      // Remove item from cart if quantity reaches 0
+      setCnt((prevCnt) => prevCnt - 1);
+      updatedCart = CartItems.filter((item) => item.id !== product.id);
     } else {
+      // Update quantity in cart
       updatedCart = CartItems.map((item) =>
         item.id === product.id ? { ...item, qty: item.qty - 1 } : item
       );
@@ -482,24 +572,21 @@ export default function Ecommerce() {
 
     setCartItems(updatedCart);
 
-    // If cart is empty, reset total price to 0
+    // Calculate price reduction
+    const discountFactor = 1 - product.discount / 100;
+    const priceReduction = product.mrp * discountFactor;
+
+    // Update total price
     if (updatedCart.length === 0) {
       setTotalPrice(0);
     } else {
-      setTotalPrice(
-        totalprice - product.mrp * (1 - product.discount / 100).toFixed(2)
-      );
-      // totalprice=totalprice - product.mrp * (1 - product.discount / 100)
-      // totalprice=parseFloat(totalprice.toFixed(2))
-      // setTotalPrice(totalprice)
-      //         const discountFactor = 1 - product.discount / 100;
-      // const priceReduction = product.mrp * discountFactor;
-      // const newTotal = totalprice - priceReduction;
-
-      // setTotalPrice(Math.round(newTotal * 100) / 100);
+      setTotalPrice((totalprice) => {
+        const newTotal = totalprice - priceReduction;
+        return parseFloat(newTotal.toFixed(2)); // Ensure proper rounding
+      });
     }
-    console.log(updatedCart);
   }
+  
 
   //Sign_UP & Login Button Handle
   function handleFormButtonClick(view) {

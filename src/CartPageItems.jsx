@@ -1,10 +1,9 @@
 import React from "react";
 
 export default function CartPageItems(props) {
-
   let { CartItems } = props;
   // let {cItems}=props
-  
+
   // let finalprice =
   // e.mrp - e.mrp * (e.discount / 100).toFixed(1);
   // let { key } = props;
@@ -38,8 +37,8 @@ export default function CartPageItems(props) {
       </h3> */}
       <div className="mb-1 p-2 h4    text-black text-center  ">
         Proceed to{" "}
-        <button className="button1"
-          
+        <button
+          className="button1"
           // onClick={proceed}
           onClick={handleBuyButtonClick}
         >
@@ -64,7 +63,7 @@ export default function CartPageItems(props) {
                       <div className="col-5  col-lg-12  text-black h5 text-start ">{`${
                         index + 1
                       })  ${product.name}`}</div>
-                      <div className="col-6 col-lg-12 text-black  text-end  pe-5">
+                      <div className="col-6 col-lg-12 text-black  text-end   pe-5">
                         {product.discount == 0 && (
                           <h4>Rs. {(product.mrp * product.qty).toFixed(2)}</h4>
                         )}
@@ -72,12 +71,14 @@ export default function CartPageItems(props) {
                           <h4>
                             Rs.{" "}
                             <span className="text-decoration-line-through   text-primary">
-                              {product.mrp}{" "}
+                              {(product.mrp*product.qty).toFixed(2)}{" "}
                             </span>{" "}
                             <span className=" text-black">
-                              {((product.mrp -
-                                product.discount * 0.01 * product.mrp) *
-                                product.qty).toFixed(2)}
+                              {(
+                                (product.mrp -
+                                  product.discount * 0.01 * product.mrp) *
+                                product.qty
+                              ).toFixed(2)}
                             </span>
                           </h4>
                         )}
