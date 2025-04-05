@@ -11,6 +11,8 @@ export default function NavBar(props) {
   let { user } = props;
   let { name } = props;
   let { loginStatus } = props;
+  let {productList}=props
+  let [userInput,setUserInput]=useState("")
   // let [btnview, setBtnView] = useState("");
   // const provider = new GoogleAuthProvider();
   //   const auth = getAuth();
@@ -23,6 +25,9 @@ export default function NavBar(props) {
 
   //   props.onLoginButtonClick();
   // }
+  let filteredData=productList.filter((item,index)=>{
+    item.tolo
+  })
   function handleFormButtonClick(view) {
     props.onFormButtonClick(view);
   }
@@ -102,7 +107,7 @@ export default function NavBar(props) {
               </button>
             </div>
           )}
-          {/* {(view == "productPage" && view == "admin") || (
+          {(view == "productPage" && view == "admin") || (
             <div class="search-box  ">
               <button class="btn-search">
                 <i class="bi bi-search"></i>
@@ -111,11 +116,12 @@ export default function NavBar(props) {
                 type="search"
                 name="text"
                 className="input-search"
-                onKeyUp={handleChangeKeyUp}
+                value={userInput}
+                onChange={(e)=>setUserInput(e.target.value)}
                 placeholder="Type to Search..."
               />
             </div>
-          )} */}
+          )}
 
           {/* {user ? (
             <>

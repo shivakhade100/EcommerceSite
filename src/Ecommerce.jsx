@@ -715,19 +715,23 @@ export default function Ecommerce() {
   }
   function handleChangeKeyUp(event) {
     let t = event.target.value;
-    // let list = [...productList];
-    let list = productList.filter((e, index) =>
+    let list = [...productList];
+    if(event.target.value){
+     list = productList.filter((e, index) =>
       e.name.toLowerCase().startsWith(t.toLowerCase())
     );
     console.log(list);
 
     setProductList(list);
+  }
+
     // return list;
 
-    // } else {
-    //   setProductList(productList);
-    //   setView("productPage");
-    // }
+    else {
+      setProductList(productList);
+      setView("productPage");
+      return productList
+    }
 
     console.log(text);
   }
@@ -821,6 +825,7 @@ export default function Ecommerce() {
           onCartItems={handleCartItems}
           onChangeKeyUp={handleChangeKeyUp}
           onLoginButtonClickUsingGoogle={handleLoginButtonClickUsingGoogle}
+          productList={productList}
         ></NavBar>
       </div>
       <div className="  productbg ">
