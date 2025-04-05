@@ -107,7 +107,7 @@ export default function NavBar(props) {
               </button>
             </div>
           )}
-          {(view == "productPage" && view == "admin") || (
+          {/* {(view == "productPage" && view == "admin") || (
             <div class="search-box  ">
               <button class="btn-search">
                 <i class="bi bi-search"></i>
@@ -121,7 +121,7 @@ export default function NavBar(props) {
                 placeholder="Type to Search..."
               />
             </div>
-          )}
+          )} */}
 
           {/* {user ? (
             <>
