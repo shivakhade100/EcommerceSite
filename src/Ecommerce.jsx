@@ -180,7 +180,7 @@ export default function Ecommerce() {
       if (user) {
         usr.name = user.displayName;
         usr.email == user.email;
-        if (usr.email == "mankarsiddhesh732@gmail.com") {
+        if (usr.email == "akhadeshivraj87@gmail.com") {
           usr.role = "admin";
         } else {
           usr.role = "user";
@@ -756,7 +756,7 @@ export default function Ecommerce() {
         let usr = { user };
         usr.name = user.displayName;
         usr.emailid = user.email;
-        if (usr.emailid == "mankarsiddhesh732@gmail.com") {
+        if (usr.emailid == "akhadeshivraj87@gmail.com") {
           usr.role = "admin";
           setView("admin");
           setLoginStatus("success");

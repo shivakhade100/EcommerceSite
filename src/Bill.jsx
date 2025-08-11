@@ -57,7 +57,7 @@ export default function Bill(props) {
     setFlagLoader(false);
     console.log(message);
 
-    window.location = `https://api.whatsapp.com/send?phone=918999181372&text=${message}`;
+    window.location = `https://api.whatsapp.com/send?phone=919699109755&text=${message}`;
   }
   if (flagLoader) {
     return (
